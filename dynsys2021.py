@@ -104,9 +104,9 @@ def dynamics_y_coupling(x, t, alpha_c = 10.0, beta_c = 14.87, a_c = -1.27, b_c =
     x_dot_y_couppled_system[0] = alpha_c * (x[1] - x[0] - fx)
     x_dot_y_couppled_system[1] = x[0] - x[1] + x[2] + sigma * (x[4] - x[1]) # y-coupling
     x_dot_y_couppled_system[2] = -beta_c * x[1]
-    x_dot_y_couppled_system[3] = alpha_c * (x[4] - x[3] - fx)
+    x_dot_y_couppled_system[3] = alpha_c * (x[4] - x[3] - fx_prime)
     x_dot_y_couppled_system[4] = x[3] - x[4] + x[5] + sigma * (x[1]- x[4]) # y-coupling
-    x_dot_y_couppled_system[5] = -beta_c * x[3]
+    x_dot_y_couppled_system[5] = -beta_c * x[4]
 
     return x_dot_y_couppled_system
 
@@ -124,9 +124,9 @@ def dynamics_z_coupling(x, t, alpha_c = 10.0, beta_c = 14.87, a_c = -1.27, b_c =
     x_dot_z_couppled_system[0] = alpha_c * (x[1] - x[0] - fx)
     x_dot_z_couppled_system[1] = x[0] - x[1] + x[2]
     x_dot_z_couppled_system[2] = -beta_c * x[1] + sigma * (x[5] - x[2]) # z-coupling
-    x_dot_z_couppled_system[3] = alpha_c * (x[4] - x[3] - fx)
+    x_dot_z_couppled_system[3] = alpha_c * (x[4] - x[3] - fx_prime)
     x_dot_z_couppled_system[4] = x[3] - x[4] + x[5]
-    x_dot_z_couppled_system[5] = -beta_c * x[3] + sigma * (x[2]- x[5]) # z-coupling
+    x_dot_z_couppled_system[5] = -beta_c * x[4] + sigma * (x[2]- x[5]) # z-coupling
 
     return x_dot_z_couppled_system
 
@@ -249,45 +249,6 @@ def dynamics_z_driver(x, t, alpha_c = 10.0, beta_c = 14.87, a_c = -1.27, b_c = -
 
     return y_couppled_pecora_carrol_system
 
-# # question 1.e.i
-# def dynamics_x_driver(x, t, alpha_c = 10.0, beta_c = 14.87, a_c = -1.27, b_c = -0.68, sigma = 0.03):
-#
-#     xdot = np.zeros(3)
-#     xdot_prime = np.zeros(3)
-#     edot = np.zeros(3)
-#
-#     # initalize the x prime vector
-#     x_prime = np.random.uniform(0.1,0.5,3)
-#
-#     fx = b_c * x[0] + 0.5 * (a_c-b_c) * (np.abs(x[0] + 1.0) - np.abs(x[0] - 1.0))
-#     fx_prime = b_c * x_prime[0] + 0.5 * (a_c-b_c) * (np.abs(x_prime[0] + 1.0) - np.abs(x_prime[0] - 1.0))
-#
-#     # The first couppled system:
-#     xdot[0] = alpha_c * (x[1] - x[0] - fx) + sigma * (x[0] - x_prime[0]) # x-coupling
-#     xdot[1] = x[0] - x[1] + x[2]
-#     xdot[2] = -beta_c * x[1]
-#
-#     # The second couppled system:
-#     xdot[0] = alpha_c * (x_prime[1] - x_prime[0] - fx_prime) + sigma * (x_prime[0] - x[0]) # x-coupling
-#     xdot[1] = x_prime[0] - x_prime[1] + x_prime[2]
-#     xdot[2] = -beta_c * x_prime[1]
-#
-#     # The errors between the respective components in the couppled systems:
-#     ex = x[0] - x_prime[0]
-#     ey = x[1] - x_prime[1]
-#     ez = x[2] - x_prime[2]
-#
-#     # The subsequent error dynamics:
-#     # edot[0] = (-alpha_c - alpha_c * (fx - fx_prime) - 2 * sigma) * ex + alpha_c * ey
-#     # edot[1] = ex - ey + ez
-#     # edot[2] = -beta_c * ey
-#
-#     edot[0] = xdot[0] - xdot_prime[0]
-#     edot[1] = xdot[1] - xdot_prime[1]
-#     edot[2] = xdot[2] - xdot_prime[2]
-#
-#     return edot
-
 def error_dynamics(y):
     X = []
     for x in y[:1][0]:
@@ -301,13 +262,7 @@ def error_dynamics(y):
 
     return A
 
-# def error_integral(t_points, from, to, component_1, component_2):
-#
-#     y = odeint(np.abs(component_1 - component_2), x_init, tpoints, args=(alpha_c, beta_c, a_c, b_c, sigma), full_output = 1, hmax = 0.01)
-#
-#     return y, t_points
-
-def init(dynamics, sigma):
+def init(dynamics):
     # randomly initialize the state vector
     x_init = np.random.uniform(0.1,0.5,3) # make this 6D
 
@@ -325,7 +280,7 @@ def init(dynamics, sigma):
 
     # yield trajectories by integrating the dynamics in time for the number of points specified above
     # y = odeint(dynamics, x_init, tpoints, args=(alpha_c, beta_c, a_c, b_c), full_output = 1, hmax = 0.01)
-    y = odeint(dynamics, x_init, tpoints, args=(alpha_c, beta_c, a_c, b_c, sigma), full_output = 1, hmax = 0.01)
+    y = odeint(dynamics, x_init, tpoints, args=(alpha_c, beta_c, a_c, b_c), full_output = 1, hmax = 0.01)
 
     return y, tpoints
 
@@ -373,20 +328,6 @@ def init_pecora_carrol(dynamics, sigma):
 
     return y, tpoints
 
-# def display_dynamics(y, tpoints, title, color):
-#     # create the figure; onto which we will plot the above trajectries
-#     plt.figure(facecolor = 'grey')
-#
-#     # plt.plot(tpoints, np.array(y[:1][0]),'k', color = "green")
-#     plt.plot(tpoints, np.array(y[:1][0]), color = color, linewidth = 2)
-#     plt.title(title)
-#     plt.xlabel(r"$time$")
-#     plt.ylabel(r"$y$")
-#     plt.xlim([0,20])
-#     plt.ylim([-5000,5500])
-#     plt.tight_layout()
-#     plt.show()
-
 def display_dynamics(y, tpoints, title, color, is_errors):
     if is_errors:
         # create the figure; onto which we will plot the above trajectries
@@ -397,9 +338,10 @@ def display_dynamics(y, tpoints, title, color, is_errors):
         plt.title(title)
         plt.xlabel(r"$time$")
         plt.ylabel(r"$y$")
-        plt.xlim([0,60])
-        plt.ylim([-15,15])
-        # plt.ylim([-20,20])
+        # plt.xlim([0,60])
+        # plt.ylim([-15,15])
+        plt.xlim([0,100])
+        plt.ylim([-100,100])
         plt.tight_layout()
         plt.show()
     else:
@@ -411,55 +353,49 @@ def display_dynamics(y, tpoints, title, color, is_errors):
         plt.title(title)
         plt.xlabel(r"$time$")
         plt.ylabel(r"$y$")
-        plt.xlim([0,60])
-        plt.ylim([-15,15])
-        # plt.ylim([-20,20])
+        # plt.xlim([0,60])
+        # plt.ylim([-15,15])
+        plt.xlim([0,100])
+        plt.ylim([-100,100])
         plt.tight_layout()
         plt.show()
 
+def show_final_dynamics(sigma):
 
-if __name__ == '__main__':
-    sigma = 5.5
-    print(f"coupling strength: {sigma}")
-    # # The origional system dynamics
-    # y, tpoints = init_coupled_systems(dynamics, sigma = 0.5)
-    # display_dynamics(y, tpoints, "System Dynamics", "green")
+    # The OG system dynamics (uncoupled)
+    y, tpoints = init(dynamics)
+    display_dynamics(y, tpoints, "System Dynamics", "green", False)
 
     # x-coupled dynamics:
     y, tpoints = init_coupled_systems(dynamics_x_coupling, sigma = sigma)
     X = error_dynamics(y)
-    # print("error dynamics:")
-    # print(X)
     display_dynamics(y, tpoints, "System Dynamics: x-coupling", "blue", is_errors = False)
     display_dynamics(X, tpoints, "Error Dynamics: x-coupling", "red", is_errors = True)
 
-    # '''
-    # want to plot the error integral against the coupling strength.
-    # '''
+    # y-coupled dynamics:
+    y, tpoints = init_coupled_systems(dynamics_y_coupling, sigma = sigma)
+    X = error_dynamics(y)
+    display_dynamics(y, tpoints, "System Dynamics: y-coupling", "green", is_errors = False)
+    display_dynamics(X, tpoints, "System Dynamics: y-coupling", "red", is_errors = True)
 
-    # # x-coupled dynamics:
-    # y, tpoints = init_pecora_carrol(dynamics_x_driver, sigma = 0.5)
-    # # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, "System Dynamics: x-driving", "blue", is_errors = False)
-    # # display_dynamics(X, tpoints, "Error Dynamics: x-coupling", "red", is_errors = True)
+    # z-coupled dynamics:
+    y, tpoints = init_coupled_systems(dynamics_z_coupling, sigma = sigma)
+    X = error_dynamics(y)
+    display_dynamics(y, tpoints, "System Dynamics: z-coupling", "purple", is_errors = False)
+    display_dynamics(X, tpoints, "System Dynamics: z-coupling", "red", is_errors = True)
 
-    # # y-coupled dynamics:
-    # y, tpoints = init(dynamics_y_coupling, sigma = 10.0)
-    # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, "System Dynamics: y-coupling", "red")
-    # display_dynamics(y, tpoints, "System Dynamics: y-coupling", "red")
 
-    # # z-coupled dynamics:
-    # y, tpoints = init(dynamics_z_coupling)
-    # display_dynamics(y, tpoints, "System Dynamics: z-coupling", "red")
+if __name__ == '__main__':
+    # sigma = 0.19 # only exponential divergence for some rounds anything less than this and no exponential divergence
+    sigma = 5.5
+    print(f"coupling strength: {sigma}")
 
-    # # x-coupled dynamics:
-    # y, tpoints = init(dynamics_x_driver, 5.0)
-    # display_dynamics(y, tpoints, "System Dynamics: x-driving", "blue")
+    '''
+    want to plot the error integral against the coupling strength.
+    E_x = (1/T)*(sum from 0 to T of np.abs(x-x_prime))
+    E_y = (1/T)*(sum from 0 to T of np.abs(y-y_prime))
+    E_z = (1/T)*(sum from 0 to T of np.abs(z-z_prime))
+    '''
 
-    # # whole system dynamics:
-    # x, tpoints = init(dynamics_x_coupling)
-    # y, tpoints = init(dynamics_y_coupling)
-    # z, tpoints = init(dynamics_z_coupling)
-    # X = [x, y, z]
-    # display_system_dynamics(X, tpoints, "System Dynamics")
+    # component-wise dynamics and errors
+    show_final_dynamics(sigma)
