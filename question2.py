@@ -12,6 +12,7 @@ We graph centralities aginst average degree instead?
 def average_degree(G):
     degrees = dict(nx.degree(G)).values()
     return sum(degrees)/len(degrees)
+    return total edges / 300
 
 # GENERATE 100 GRAPHS VERSION
 # 2.a - Erdos-Renyi Graph with 300 vertices and 0.5 probability edge conection
@@ -30,32 +31,33 @@ for i in range(1, 10):
     # print(f"rounded avg degree: {round(average_degree(G))}")
     average_degrees.append(round(average_degree(G)))
     # degrees = G.degree()
-    # assortativities.append(nx.degree_assortativity_coefficient(G))
-    # transitivities.append(nx.transitivity(G))
+    assortativities.append(nx.degree_assortativity_coefficient(G))
+    transitivities.append(nx.transitivity(G))
     degree_centralities.append(nx.degree_centrality(G).values()) # how is this possible?
     # eigenvector_centralities.append(nx.eigenvector_centrality(G).values())
 
-
 # # plot assortativity against p
 # plt.plot(probabilities, assortativities)
+# plt.title("assortativity against p")
 # plt.xlabel("probability of edge connection")
 # plt.ylabel("assortativity")
 # plt.show()
-#
-# # plot transitivity against p
-# plt.plot(probabilities, transitivities)
-# plt.xlabel("probability of edge connection")
-# plt.ylabel("transitivity")
-# plt.show()
+
+# plot transitivity against p
+# straight line just now?
+plt.plot(probabilities, transitivities)
+plt.xlabel("probability of edge connection")
+plt.ylabel("transitivity")
+plt.show()
 
 # print(average_degrees)
 # print(degree_centralities)
 
-# plot degree_centrality against average degree
-plt.plot(average_degrees, degree_centralities)
-plt.xlabel("average degree")
-plt.ylabel("degree centrality")
-plt.show()
+# # plot degree_centrality against average degree
+# plt.plot(average_degrees, degree_centralities)
+# plt.xlabel("average degree")
+# plt.ylabel("degree centrality")
+# plt.show()
 
 # # plot eigenvector_centralities against p
 # plt.plot(probabilities, eigenvector_centralities)
