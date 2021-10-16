@@ -306,6 +306,28 @@ def init_system(dynamics, sigma):
 
     return y, tpoints
 
+# def init_pecora_carrol(dynamics, sigma):
+#     # randomly initialize the state vector
+#     x_init = np.random.uniform(0.1,0.5,6) # make this 5D
+#
+#     # initalise the time, final time and step size
+#     t_init = 0; t_final = 100; t_step = 0.01
+#
+#     # construct the range of time values
+#     tpoints = np.arange(t_init, t_final, t_step)
+#
+#     # ????????????????????????????
+#     transient = int(0.8 * len(tpoints))
+#
+#     # assign values to all parameters for the dynamics
+#     alpha_c = 10.0; beta_c = 14.87; a_c = -1.27; b_c = -0.68; # sigma = sigma
+#
+#     # yield trajectories by integrating the dynamics in time for the number of points specified above
+#     # y = odeint(dynamics, x_init, tpoints, args=(alpha_c, beta_c, a_c, b_c), full_output = 1, hmax = 0.01)
+#     y = odeint(dynamics, x_init, tpoints, args=(alpha_c, beta_c, a_c, b_c, sigma), full_output = 1, hmax = 0.01)
+
+    return y, tpoints
+
 def display_dynamics(y, tpoints, title, color, is_errors):
     if is_errors:
         # create the figure; onto which we will plot the above trajectries
