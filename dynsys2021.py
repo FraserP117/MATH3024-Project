@@ -341,29 +341,29 @@ def show_final_dynamics(sigma):
 
 if __name__ == '__main__':
     # sigma = 0.19 # only exponential divergence for some rounds anything less than this and no exponential divergence
-    sigma = 0.05
+    sigma = 0.0
     print(f"coupling strength: {sigma}")
 
-    '''
-    want to plot the error integral against the coupling strength.
-    E_x = (1/T)*(sum from 0 to T of np.abs(x-x_prime))
-    E_y = (1/T)*(sum from 0 to T of np.abs(y-y_prime))
-    E_z = (1/T)*(sum from 0 to T of np.abs(z-z_prime))
-    '''
-
+    # '''
+    # want to plot the error integral against the coupling strength.
+    # E_x = (1/T)*(sum from 0 to T of np.abs(x-x_prime))
+    # E_y = (1/T)*(sum from 0 to T of np.abs(y-y_prime))
+    # E_z = (1/T)*(sum from 0 to T of np.abs(z-z_prime))
+    # '''
+    #
     # # The OG system dynamics (uncoupled)
     # y, tpoints = init(dynamics)
-    # display_dynamics(y, tpoints, f"System Dynamics for sigma = {sigma}", "blue", False)
-
-    # component-wise dynamics and errors
+    # display_dynamics(y, tpoints, f"OG System Dynamics for sigma = {sigma}", "blue", False)
+    #
+    # # component-wise dynamics and errors
     # show_final_dynamics(sigma)
-
-    # x-coupled dynamics stochastic:
-    y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
-    X = error_dynamics(y)
-    display_dynamics(y, tpoints, f"x-coupling stohastic dynamics for sigma = {sigma}", "lime", is_errors = False)
-    display_dynamics(X, tpoints, f"x-coupling stohastic error dynamics for sigma = {sigma}", "purple", is_errors = True)
-
+    #
+    # # x-coupled dynamics stochastic:
+    # y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
+    # X = error_dynamics(y)
+    # display_dynamics(y, tpoints, f"x-coupling stohastic dynamics for sigma = {sigma}", "lime", is_errors = False)
+    # display_dynamics(X, tpoints, f"x-coupling stohastic error dynamics for sigma = {sigma}", "purple", is_errors = True)
+    #
     # # errors vs coupling strength
     # final_x_errors = []
     # final_y_errors = []
@@ -403,12 +403,12 @@ if __name__ == '__main__':
     #     final_z_errors.append(sum(z_errors)/10000)
     #
     #     sigma += 0.01
-
-    # # print(f"final_x_errors: {final_x_errors} ")
-    # # print(f"final_y_errors: {final_y_errors} ")
-    # # print(f"final_z_errors: {final_z_errors} ")
-    # # print(f"sigmas: {sigmas}")
-
+    #
+    # # # print(f"final_x_errors: {final_x_errors} ")
+    # # # print(f"final_y_errors: {final_y_errors} ")
+    # # # print(f"final_z_errors: {final_z_errors} ")
+    # # # print(f"sigmas: {sigmas}")
+    #
     # # x-errors
     # plt.plot(sigmas, final_x_errors)
     # plt.title("coupling strength step size: 0.1")
@@ -430,21 +430,23 @@ if __name__ == '__main__':
     # plt.ylabel("z-component errors", fontsize = 12)
     # plt.show()
 
+    sigma = 5.6
+
     # Pecorra-carrol drive response systems:
-    # # x-driving dynamics:
-    # y, tpoints = init_system(dynamics_x_driver, sigma = sigma)
-    # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, f"System Dynamics: x-driving coupling strength = {sigma}", "blue", is_errors = False)
-    # display_dynamics(X, tpoints, f"Error Dynamics: x-driving coupling strength = {sigma}", "red", is_errors = True)
-    #
-    # # y-driving dynamics:
-    # y, tpoints = init_system(dynamics_y_driver, sigma = sigma)
-    # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, f"System Dynamics: y-driving coupling strength = {sigma}", "lime", is_errors = False)
-    # display_dynamics(X, tpoints, f"Error Dynamics: y-driving coupling strength = {sigma}", "red", is_errors = True)
-    #
-    # # z-driving dynamics:
-    # y, tpoints = init_system(dynamics_z_driver, sigma = sigma)
-    # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, f"System Dynamics: z-driving coupling strength = {sigma}", "orange", is_errors = False)
-    # display_dynamics(X, tpoints, f"Error Dynamics: z-driving coupling strength = {sigma}", "red", is_errors = True)
+    # x-driving dynamics:
+    y, tpoints = init_system(dynamics_x_driver, sigma = sigma)
+    X = error_dynamics(y)
+    display_dynamics(y, tpoints, f"System Dynamics: x-driving coupling strength = {sigma}", "blue", is_errors = False)
+    display_dynamics(X, tpoints, f"Error Dynamics: x-driving coupling strength = {sigma}", "red", is_errors = True)
+
+    # y-driving dynamics:
+    y, tpoints = init_system(dynamics_y_driver, sigma = sigma)
+    X = error_dynamics(y)
+    display_dynamics(y, tpoints, f"System Dynamics: y-driving coupling strength = {sigma}", "lime", is_errors = False)
+    display_dynamics(X, tpoints, f"Error Dynamics: y-driving coupling strength = {sigma}", "red", is_errors = True)
+
+    # z-driving dynamics:
+    y, tpoints = init_system(dynamics_z_driver, sigma = sigma)
+    X = error_dynamics(y)
+    display_dynamics(y, tpoints, f"System Dynamics: z-driving coupling strength = {sigma}", "orange", is_errors = False)
+    display_dynamics(X, tpoints, f"Error Dynamics: z-driving coupling strength = {sigma}", "red", is_errors = True)
