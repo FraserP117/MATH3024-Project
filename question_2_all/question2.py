@@ -330,7 +330,7 @@ def add_sand(num_grains_to_add, sandpile):
         if num_grains == 3:
             # num_grains += num_grains_to_add
             sandpile[node] = num_grains + num_grains_to_add
-            print(f"{num_grains} grains on node: {node}")
+            # print(f"{num_grains} grains on node: {node}")
             return sandpile
     return sandpile
 '''
@@ -381,7 +381,7 @@ def sandpile_sim(threshold, lattice, sandpile):
 
 
 ''' Assortativity '''
-def show_assortativities(probabilities, average_degrees, assortativities, is_ER):
+def show_assortativities(probabilities, average_degrees, assortativities):
     # plot assortativity against p
     plt.scatter(probabilities, assortativities, s = 2, color = 'blue')
     plt.title("assortativity against p")
@@ -389,16 +389,15 @@ def show_assortativities(probabilities, average_degrees, assortativities, is_ER)
     plt.ylabel("assortativity")
     plt.show()
 
-    if is_ER:
-        # plot assortativity against average degree
-        plt.scatter(average_degrees, assortativities, s = 2, color = 'blue')
-        plt.title("assortativity against average degree")
-        plt.xlabel("average degree")
-        plt.ylabel("assortativity")
-        plt.show()
+    # plot assortativity against average degree
+    plt.scatter(average_degrees, assortativities, s = 2, color = 'blue')
+    plt.title("assortativity against average degree")
+    plt.xlabel("average degree")
+    plt.ylabel("assortativity")
+    plt.show()
 
 ''' Transitivity '''
-def show_transitivities(probabilities, average_degrees, transitivities, is_ER):
+def show_transitivities(probabilities, average_degrees, transitivities):
     # plot transitivity against p
     plt.scatter(probabilities, transitivities, s = 2, color = 'red')
     plt.title("transitivity against p")
@@ -406,16 +405,15 @@ def show_transitivities(probabilities, average_degrees, transitivities, is_ER):
     plt.ylabel("transitivity")
     plt.show()
 
-    if is_ER:
-        # plot transitivity against p
-        plt.scatter(average_degrees, transitivities, s = 2, color = 'red')
-        plt.title("transitivity against average degree")
-        plt.xlabel("average degree")
-        plt.ylabel("transitivity")
-        plt.show()
+    # plot transitivity against p
+    plt.scatter(average_degrees, transitivities, s = 2, color = 'red')
+    plt.title("transitivity against average degree")
+    plt.xlabel("average degree")
+    plt.ylabel("transitivity")
+    plt.show()
 
 ''' Degree Centrality '''
-def show_degree_centralities(probabilities, average_degrees, degree_centralities, is_ER):
+def show_degree_centralities(probabilities, average_degrees, degree_centralities):
     # plot degree_centrality against average degree
     plt.scatter(probabilities, degree_centralities, s = 2, color = 'green')
     plt.title("degree centrality against p")
@@ -423,16 +421,15 @@ def show_degree_centralities(probabilities, average_degrees, degree_centralities
     plt.ylabel("degree centrality")
     plt.show()
 
-    if is_ER:
-        # plot degree_centrality against average degree
-        plt.scatter(average_degrees, degree_centralities, s = 2, color = 'green')
-        plt.title("degree centrality against average degree")
-        plt.xlabel("average degree")
-        plt.ylabel("degree centrality")
-        plt.show()
+    # plot degree_centrality against average degree
+    plt.scatter(average_degrees, degree_centralities, s = 2, color = 'green')
+    plt.title("degree centrality against average degree")
+    plt.xlabel("average degree")
+    plt.ylabel("degree centrality")
+    plt.show()
 
 ''' Eigenvector Centrality '''
-def show_eigenvector_centralities(probabilities, average_degrees, eigenvector_centralities, is_ER):
+def show_eigenvector_centralities(probabilities, average_degrees, eigenvector_centralities):
     # plot eigenvector_centralities against p
     plt.scatter(probabilities, eigenvector_centralities, s = 2, color = 'purple')
     plt.title("eigenvector centrality against p")
@@ -440,16 +437,15 @@ def show_eigenvector_centralities(probabilities, average_degrees, eigenvector_ce
     plt.ylabel("eigenvector centrality")
     plt.show()
 
-    if is_ER:
-        # plot eigenvector_centralities against average degree
-        plt.scatter(average_degrees, eigenvector_centralities, s = 2, color = 'purple')
-        plt.title("eigenvector centrality against average degree")
-        plt.xlabel("average degree")
-        plt.ylabel("eigenvector centrality")
-        plt.show()
+    # plot eigenvector_centralities against average degree
+    plt.scatter(average_degrees, eigenvector_centralities, s = 2, color = 'purple')
+    plt.title("eigenvector centrality against average degree")
+    plt.xlabel("average degree")
+    plt.ylabel("eigenvector centrality")
+    plt.show()
 
 ''' percolation Centrality '''
-def show_percolation_centralities(probabilities, average_degrees, percolation_centralities, is_ER):
+def show_percolation_centralities(probabilities, average_degrees, percolation_centralities):
     # plot eigenvector_centralities against p
     plt.scatter(probabilities, percolation_centralities, s = 2, color = 'orange')
     plt.title("percolation centrality against p")
@@ -457,16 +453,15 @@ def show_percolation_centralities(probabilities, average_degrees, percolation_ce
     plt.ylabel("percolation centrality")
     plt.show()
 
-    if is_ER:
-        # plot percolation_centralities against average degree
-        plt.scatter(average_degrees, percolation_centralities, s = 2, color = 'orange')
-        plt.title("percolation centrality against average degree")
-        plt.xlabel("average degree")
-        plt.ylabel("percolation centrality")
-        plt.show()
+    # plot percolation_centralities against average degree
+    plt.scatter(average_degrees, percolation_centralities, s = 2, color = 'orange')
+    plt.title("percolation centrality against average degree")
+    plt.xlabel("average degree")
+    plt.ylabel("percolation centrality")
+    plt.show()
 
 ''' Diameter'''
-def show_diameters(probabilities, average_degrees, diameters, is_ER):
+def show_diameters(probabilities, average_degrees, diameters):
     # plot diameters against p
     plt.scatter(probabilities, diameters, s = 1.5, color = 'lime')
     plt.title("graph diameter against p")
@@ -474,34 +469,35 @@ def show_diameters(probabilities, average_degrees, diameters, is_ER):
     plt.ylabel("diameter")
     plt.show()
 
-    if is_ER:
-        # plot diameters against average degree
-        plt.scatter(average_degrees, diameters, s = 1.5, color = 'lime')
-        plt.title("graph diameter against average degree")
-        plt.xlabel("average degree")
-        plt.ylabel("diameter")
-        plt.show()
+    # plot diameters against average degree
+    plt.scatter(average_degrees, diameters, s = 1.5, color = 'lime')
+    plt.title("graph diameter against average degree")
+    plt.xlabel("average degree")
+    plt.ylabel("diameter")
+    plt.show()
 
 
 if __name__ == '__main__':
 
     # # question 2.a
     # generate_ER_graph_metrics()
-    # show_degree_centralities(probabilities, average_degrees, degree_centralities, True)
-    # show_assortativities(probabilities, average_degrees, assortativities, True)
-    # show_transitivities(probabilities, average_degrees, transitivities, True)
-    # show_eigenvector_centralities(probabilities, average_degrees, eigenvector_centralities, True)
-    # show_percolation_centralities(probabilities, average_degrees, percolation_centralities, True)
-    # show_diameters(probabilities, average_degrees, diameters, True)
+    # show_degree_centralities(probabilities, average_degrees, degree_centralities)
+    # show_assortativities(probabilities, average_degrees, assortativities)
+    # show_transitivities(probabilities, average_degrees, transitivities)
+    # show_eigenvector_centralities(probabilities, average_degrees, eigenvector_centralities)
+    # show_percolation_centralities(probabilities, average_degrees, percolation_centralities)
+    # show_diameters(probabilities, average_degrees, diameters)
 
-    # question 2.b
-    generate_WS_graph_metrics()
-    show_degree_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_degree_centralities, False)
-    show_assortativities(WS_edge_rewire_probabilities, WS_average_degrees, WS_assortativities, False)
-    show_transitivities(WS_edge_rewire_probabilities, WS_average_degrees, WS_transitivities, False)
-    show_eigenvector_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_eigenvector_centralities, False)
-    show_percolation_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_percolation_centralities, False)
-    show_diameters(WS_edge_rewire_probabilities, WS_average_degrees, WS_diameters, False)
+    # # question 2.b
+    # generate_WS_graph_metrics()
+    # show_degree_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_degree_centralities)
+    # show_assortativities(WS_edge_rewire_probabilities, WS_average_degrees, WS_assortativities)
+    # show_transitivities(WS_edge_rewire_probabilities, WS_average_degrees, WS_transitivities)
+    # show_eigenvector_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_eigenvector_centralities)
+    # show_percolation_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_percolation_centralities)
+    # print(f"\n\nlen(WS_edge_rewire_probabilities): {len(WS_edge_rewire_probabilities)}")
+    # print(f"len(WS_average_degrees): {len(WS_average_degrees)}\n\n")
+    # show_diameters(WS_edge_rewire_probabilities, WS_average_degrees, WS_diameters)
 
     # # BA Graph G_0
     # # G_0 = nx.barabasi_albert_graph(300, 6)
@@ -544,17 +540,36 @@ if __name__ == '__main__':
     # critical_sandpile = add_sand(2, sandpile)
     # num_av = sandpile_sim(4, lattice, sandpile)
 
-    '''
     threshold = 4
     num_grains = 400
     lattice = nx.random_regular_graph(4, num_grains)
+
     sandpile = create_sandpile(num_grains)
     critical_sandpile = add_sand(20, sandpile)
+    sandpile = create_sandpile(num_grains)
     num_av = sandpile_sim(4, lattice, sandpile)
 
-    print(f"\n\nnumber of avalanches: {num_av}")
-    '''
+    # avalanche_sizes = []
+    # print(f"\n\ntype(sandpile): {type(sandpile)}")
+    # print(f"len(sandpile): {len(sandpile)}\n\n")
+    # i = 0
+    # while not is_saturated(sandpile, threshold):
+    #     # critical_sandpile = add_sand(1, sandpile)
+    #     # sandpile = critical_sandpile
+    #     sandpile = add_sand(1, sandpile)
+    #     num_av = sandpile_sim(4, lattice, sandpile)
+    #     avalanche_sizes.append(num_av)
+    #     print(f"\n\niter: {i}")
+    #     print(f"type(sandpile): {type(sandpile)}")
+    #     print(f"len(sandpile): {len(sandpile)}")
+    #     print(f"any critical: {any_critical(sandpile, threshold)}\n\n")
 
+
+    # number_avalanches = [a + 1 for a in range(num_av)]
+
+    # plt.plot(number_avalanches, avalanche_sizes)
+
+    print(f"\n\nnumber of avalanches: {num_av}\n\n")
 
     # nx.draw(lattice, node_size = 2.0, width = 0.75, node_color = "lime", edge_color = "green")
     # plt.show()
