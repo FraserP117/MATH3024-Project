@@ -109,7 +109,7 @@ def generate_WS_graph_metrics():
         WS_eigenvector_centralities.append(average_eigenvector_centrality(G0))
         WS_percolation_centralities.append(average_percolation_centrality(G0))
 
-def assortative_swaps_random(G):
+def assortative_rewiring_random(G):
     changed_assortativities = []
     number_swaps = []
     G_prime = G.copy()
@@ -132,6 +132,30 @@ def assortative_swaps_random(G):
 
     return G
 
+def disassortative_rewiring_random(G):
+    changed_assortativities = []
+    number_swaps = []
+    G_prime = G.copy()
+    iter = 0
+    for i in range(15000):
+        A = nx.degree_assortativity_coefficient(G)
+        G_prime = G.copy()
+        nx.double_edge_swap(G_prime)
+        if nx.degree_assortativity_coefficient(G_prime) < nx.degree_assortativity_coefficient(G):
+            G = G_prime
+            changed_assortativities.append(nx.degree_assortativity_coefficient(G_prime))
+            number_swaps.append(iter)
+            iter += 1
+
+    plt.scatter(number_swaps, changed_assortativities, s = 1.5, color = 'darkviolet')
+    plt.title("BA Graph Assortativity vs number of 2-OPT swaps")
+    plt.xlabel("number 2-OPT swaps")
+    plt.ylabel("assortativity")
+    plt.show()
+
+    return G
+
+
 '''
 If new_edge has any vertices in common with edge_list, return true
 else return False.
@@ -142,7 +166,6 @@ def any_common_ele(edge_list, new_edge):
         if i in full:
             return True
     return False
-
 
 '''
 select 2 edges from G_prime: (x, y) (u, v)
@@ -166,12 +189,8 @@ if d_0 > min(d_1, d_2):
 if d_0 < max(d_1, d_2):
     take the max
     add edge for min assortativity
-
-
-randomly select 2 edges from the gaph
-make sure each vertex in teh 2 edges are unique
 '''
-def assortative_swaps(G):
+def assortative_rewiring(G):
     changed_assortativities = []
     number_swaps = []
     iter = 0
@@ -186,23 +205,15 @@ def assortative_swaps(G):
 
             random_edge = random.choice(all_edges)
 
-            print(f"\nPRIOR random_edge: {random_edge}, len(random_edge): {len(random_edge)}")
-            print(f"PRIOR selected_edges: {selected_edges}, len(selected_edges): {len(selected_edges)}")
-
             if not any_common_ele(selected_edges, random_edge):
                 selected_edges.append(random_edge)
 
-            print(f"AFTER random_edge: {random_edge}, len(random_edge): {len(random_edge)}")
-            print(f"AFTER selected_edges: {selected_edges}, len(selected_edges): {len(selected_edges)}\n")
+            print(f"selected_edges: {selected_edges}")
 
         d_0 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[0][1]]) + np.abs(G_prime.degree[selected_edges[1][0]] - G_prime.degree[selected_edges[1][1]]) # d_0 = |k_u - k_v| + |k_w - k_x|
         d_1 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][0]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][1]]) # d_1 = |k_u - k_w| + |k_v - k_x|
         d_2 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][1]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][0]]) # d_2 = |k_u - k_x| + |k_v - k_w|
         min_d = min(d_1, d_2)
-
-        print(f"\nd_0: {d_0}")
-        print(f"d_1: {d_1}")
-        print(f"d_2: {d_2}\n")
 
         if d_0 > min_d:
             if min_d == d_1:
@@ -210,51 +221,36 @@ def assortative_swaps(G):
                 if G_prime.has_edge(selected_edges[0][0], selected_edges[1][0]):
                     pass
                 else:
+                    print(f"edge added: {(selected_edges[0][0], selected_edges[1][0])}")
                     G_prime.add_edge(selected_edges[0][0], selected_edges[1][0])
-                    if G_prime.has_edge(selected_edges[0][0], selected_edges[0][0]) or G_prime.has_edge(selected_edges[1][0], selected_edges[1][0]):
-                        print("SELF LOOP")
-                        return G
+
                 if G_prime.has_edge(selected_edges[0][1], selected_edges[1][1]):
                     pass
                 else:
-                    # print(f"edge added: {(vertex_degrees[0][0], vertex_degrees[1][0])}")
+                    print(f"edge added: {(selected_edges[0][1], selected_edges[1][1])}")
                     G_prime.add_edge(selected_edges[0][1], selected_edges[1][1])
-                    if G_prime.has_edge(selected_edges[0][1], selected_edges[0][1]) or G_prime.has_edge(selected_edges[1][1], selected_edges[1][1]):
-                        print("SELF LOOP")
-                        return G
 
                 # remove the selected edges from the graph:
                 for edge in selected_edges:
                     G_prime.remove_edge(*edge)
-
-                # print(f"len(all_edges): {len(all_edges)}\n")
 
             elif min_d == d_2:
                 if G_prime.has_edge(selected_edges[0][0], selected_edges[1][1]):
                     pass
                 else:
                     # add edges between selected edges for maximal assortativity:
+                    print(f"edge added: {(selected_edges[0][0], selected_edges[1][1])}")
                     G_prime.add_edge(selected_edges[0][0], selected_edges[1][1])
-                    if G_prime.has_edge(selected_edges[0][0], selected_edges[0][0]) or G_prime.has_edge(selected_edges[1][1], selected_edges[1][1]):
-                        print("SELF LOOP")
-                        return G
+
                 if G_prime.has_edge(selected_edges[0][1], selected_edges[1][0]):
                     pass
                 else:
-                    # print(f"edge added: {(vertex_degrees[0][0], vertex_degrees[1][0])}")
+                    print(f"edge added: {(selected_edges[0][1], selected_edges[1][0])}")
                     G_prime.add_edge(selected_edges[0][1], selected_edges[1][0])
-                    if G_prime.has_edge(selected_edges[0][1], selected_edges[0][1]) or G_prime.has_edge(selected_edges[1][0], selected_edges[1][0]):
-                        print("SELF LOOP")
-                        return G
 
                 # remove the selected edges from the graph:
                 for edge in selected_edges:
                     G_prime.remove_edge(*edge)
-
-                # print(f"len(all_edges): {len(all_edges)}\n")
-
-            else:
-                print("--------------------------- NONE SWAPPED ---------------------------")
 
         G = G_prime
 
@@ -264,26 +260,72 @@ def assortative_swaps(G):
     return G
 
 
-def disassortative_swaps_random(G):
+def disassortative_rewiring(G):
     changed_assortativities = []
     number_swaps = []
-    G_prime = G.copy()
     iter = 0
     for i in range(15000):
-        A = nx.degree_assortativity_coefficient(G)
-        G_prime = G.copy()
-        nx.double_edge_swap(G_prime)
-        if nx.degree_assortativity_coefficient(G_prime) < nx.degree_assortativity_coefficient(G):
-            G = G_prime
-            changed_assortativities.append(nx.degree_assortativity_coefficient(G_prime))
-            number_swaps.append(iter)
-            iter += 1
 
-    plt.scatter(number_swaps, changed_assortativities, s = 1.5, color = 'darkviolet')
-    plt.title("BA Graph Assortativity vs number of 2-OPT swaps")
-    plt.xlabel("number 2-OPT swaps")
-    plt.ylabel("assortativity")
-    plt.show()
+        G_prime = G.copy()
+
+        # randomly select 2 edges and remove these from the graph
+        all_edges = [e for e in G_prime.edges]
+        selected_edges = []
+        while len(selected_edges) != 2:
+
+            random_edge = random.choice(all_edges)
+
+            if not any_common_ele(selected_edges, random_edge):
+                selected_edges.append(random_edge)
+
+            print(f"selected_edges: {selected_edges}")
+
+        d_0 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[0][1]]) + np.abs(G_prime.degree[selected_edges[1][0]] - G_prime.degree[selected_edges[1][1]]) # d_0 = |k_u - k_v| + |k_w - k_x|
+        d_1 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][0]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][1]]) # d_1 = |k_u - k_w| + |k_v - k_x|
+        d_2 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][1]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][0]]) # d_2 = |k_u - k_x| + |k_v - k_w|
+        max_d = max(d_1, d_2)
+
+        if d_0 < max_d:
+            if max_d == d_1:
+                # add edges between selected edges for maximal assortativity:
+                if G_prime.has_edge(selected_edges[0][0], selected_edges[1][0]):
+                    pass
+                else:
+                    print(f"edge added: {(selected_edges[0][0], selected_edges[1][0])}")
+                    G_prime.add_edge(selected_edges[0][0], selected_edges[1][0])
+
+                if G_prime.has_edge(selected_edges[0][1], selected_edges[1][1]):
+                    pass
+                else:
+                    print(f"edge added: {(selected_edges[0][1], selected_edges[1][1])}")
+                    G_prime.add_edge(selected_edges[0][1], selected_edges[1][1])
+
+                # remove the selected edges from the graph:
+                for edge in selected_edges:
+                    G_prime.remove_edge(*edge)
+
+            elif max_d == d_2:
+                if G_prime.has_edge(selected_edges[0][0], selected_edges[1][1]):
+                    pass
+                else:
+                    # add edges between selected edges for maximal assortativity:
+                    print(f"edge added: {(selected_edges[0][0], selected_edges[1][1])}")
+                    G_prime.add_edge(selected_edges[0][0], selected_edges[1][1])
+
+                if G_prime.has_edge(selected_edges[0][1], selected_edges[1][0]):
+                    pass
+                else:
+                    print(f"edge added: {(selected_edges[0][1], selected_edges[1][0])}")
+                    G_prime.add_edge(selected_edges[0][1], selected_edges[1][0])
+
+                # remove the selected edges from the graph:
+                for edge in selected_edges:
+                    G_prime.remove_edge(*edge)
+
+        G = G_prime
+
+        # increment the iterations:
+        iter += 1
 
     return G
 
@@ -519,7 +561,8 @@ if __name__ == '__main__':
     # G_0 = nx.barabasi_albert_graph(300, 6)
     G_0 = nx.barabasi_albert_graph(300, 6)
 
-    G_a = assortative_swaps(G_0)
+    # G_a = assortative_rewiring(G_0)
+    G_a = disassortative_rewiring(G_0)
 
     # assortativity of G_0:
     A_1 = nx.degree_assortativity_coefficient(G_0)
@@ -529,10 +572,10 @@ if __name__ == '__main__':
 
 
     # # The comparatively assortative graph:
-    # G_a = assortative_swaps_random(G_0)
+    # G_a = assortative_rewiring_random(G_0)
     #
     # # The comparatively disassortative graph:
-    # G_b = disassortative_swaps_random(G_0)
+    # G_b = disassortative_rewiring_random(G_0)
     #
     # # Assortativity of G_a:
     # A_2 = nx.degree_assortativity_coefficient(G_a)
