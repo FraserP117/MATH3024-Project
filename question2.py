@@ -191,10 +191,13 @@ if d_0 < max(d_1, d_2):
     add edge for min assortativity
 '''
 def assortative_rewiring(G):
-    changed_assortativities = []
     number_swaps = []
+    assortativity_history = []
     iter = 0
+    swap_count = 0
     for i in range(15000):
+
+        # swap_count = 0
 
         G_prime = G.copy()
 
@@ -209,6 +212,8 @@ def assortative_rewiring(G):
                 selected_edges.append(random_edge)
 
             print(f"selected_edges: {selected_edges}")
+
+        assortativity_history.append(nx.degree_assortativity_coefficient(G_prime))
 
         d_0 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[0][1]]) + np.abs(G_prime.degree[selected_edges[1][0]] - G_prime.degree[selected_edges[1][1]]) # d_0 = |k_u - k_v| + |k_w - k_x|
         d_1 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][0]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][1]]) # d_1 = |k_u - k_w| + |k_v - k_x|
@@ -223,12 +228,14 @@ def assortative_rewiring(G):
                 else:
                     print(f"edge added: {(selected_edges[0][0], selected_edges[1][0])}")
                     G_prime.add_edge(selected_edges[0][0], selected_edges[1][0])
+                    swap_count += 1
 
                 if G_prime.has_edge(selected_edges[0][1], selected_edges[1][1]):
                     pass
                 else:
                     print(f"edge added: {(selected_edges[0][1], selected_edges[1][1])}")
                     G_prime.add_edge(selected_edges[0][1], selected_edges[1][1])
+                    swap_count += 1
 
                 # remove the selected edges from the graph:
                 for edge in selected_edges:
@@ -241,12 +248,14 @@ def assortative_rewiring(G):
                     # add edges between selected edges for maximal assortativity:
                     print(f"edge added: {(selected_edges[0][0], selected_edges[1][1])}")
                     G_prime.add_edge(selected_edges[0][0], selected_edges[1][1])
+                    swap_count += 1
 
                 if G_prime.has_edge(selected_edges[0][1], selected_edges[1][0]):
                     pass
                 else:
                     print(f"edge added: {(selected_edges[0][1], selected_edges[1][0])}")
                     G_prime.add_edge(selected_edges[0][1], selected_edges[1][0])
+                    swap_count += 1
 
                 # remove the selected edges from the graph:
                 for edge in selected_edges:
@@ -254,16 +263,25 @@ def assortative_rewiring(G):
 
         G = G_prime
 
+        number_swaps.append(swap_count)
+
         # increment the iterations:
         iter += 1
+
+    plt.plot(number_swaps, assortativity_history, linewidth = 1.0, color = "blue")
+    plt.title("Assortative Reqiring")
+    plt.xlabel("number of edge swaps")
+    plt.ylabel("assortativity")
+    plt.show()
 
     return G
 
 
 def disassortative_rewiring(G):
-    changed_assortativities = []
     number_swaps = []
+    assortativity_history = []
     iter = 0
+    swap_count = 0
     for i in range(15000):
 
         G_prime = G.copy()
@@ -280,6 +298,8 @@ def disassortative_rewiring(G):
 
             print(f"selected_edges: {selected_edges}")
 
+        assortativity_history.append(nx.degree_assortativity_coefficient(G_prime))
+
         d_0 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[0][1]]) + np.abs(G_prime.degree[selected_edges[1][0]] - G_prime.degree[selected_edges[1][1]]) # d_0 = |k_u - k_v| + |k_w - k_x|
         d_1 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][0]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][1]]) # d_1 = |k_u - k_w| + |k_v - k_x|
         d_2 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][1]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][0]]) # d_2 = |k_u - k_x| + |k_v - k_w|
@@ -293,12 +313,14 @@ def disassortative_rewiring(G):
                 else:
                     print(f"edge added: {(selected_edges[0][0], selected_edges[1][0])}")
                     G_prime.add_edge(selected_edges[0][0], selected_edges[1][0])
+                    swap_count += 1
 
                 if G_prime.has_edge(selected_edges[0][1], selected_edges[1][1]):
                     pass
                 else:
                     print(f"edge added: {(selected_edges[0][1], selected_edges[1][1])}")
                     G_prime.add_edge(selected_edges[0][1], selected_edges[1][1])
+                    swap_count += 1
 
                 # remove the selected edges from the graph:
                 for edge in selected_edges:
@@ -311,12 +333,14 @@ def disassortative_rewiring(G):
                     # add edges between selected edges for maximal assortativity:
                     print(f"edge added: {(selected_edges[0][0], selected_edges[1][1])}")
                     G_prime.add_edge(selected_edges[0][0], selected_edges[1][1])
+                    swap_count += 1
 
                 if G_prime.has_edge(selected_edges[0][1], selected_edges[1][0]):
                     pass
                 else:
                     print(f"edge added: {(selected_edges[0][1], selected_edges[1][0])}")
                     G_prime.add_edge(selected_edges[0][1], selected_edges[1][0])
+                    swap_count += 1
 
                 # remove the selected edges from the graph:
                 for edge in selected_edges:
@@ -324,44 +348,18 @@ def disassortative_rewiring(G):
 
         G = G_prime
 
+        number_swaps.append(swap_count)
+
         # increment the iterations:
         iter += 1
 
+    plt.plot(number_swaps, assortativity_history, linewidth = 1.0, color = "red")
+    plt.title("Dissasortative Reqiring")
+    plt.xlabel("number of edge swaps")
+    plt.ylabel("assortativity")
+    plt.show()
+
     return G
-
-# # compute all relevant metrics for 100 random graphs with harmoically
-# # decreasing edge connection probabilities
-# def generate_BA_graph_metrics():
-#     for i in range(1, 10):
-#         G = nx.barabasi_albert_graph(300, 6)
-#         WS_edge_rewire_probabilities.append(1/i)
-#         WS_average_degrees.append(round(average_degree(G)))
-#         WS_assortativities.append(nx.degree_assortativity_coefficient(G))
-#         WS_transitivities.append(nx.transitivity(G))
-#         WS_degree_centralities.append(average_degree_centrality(G))
-#         WS_eigenvector_centralities.append(average_eigenvector_centrality(G))
-#         WS_percolation_centralities.append(average_percolation_centrality(G))
-#
-#         if nx.is_connected(G):
-#             diameters.append(nx.diameter(G))
-#         else:
-#             diameters.append(np.Infinity)
-
-# ''' Assortativity '''
-# def show_assortativities(probabilities, average_degrees, assortativities):
-#     # plot assortativity against p
-#     plt.scatter(probabilities, assortativities, s = 2, color = 'blue')
-#     plt.title("assortativity against p")
-#     plt.xlabel("probability of edge connection")
-#     plt.ylabel("assortativity")
-#     plt.show()
-#
-#     # plot assortativity against average degree
-#     plt.scatter(average_degrees, assortativities, s = 2, color = 'blue')
-#     plt.title("assortativity against average degree")
-#     plt.xlabel("probability of edge connection")
-#     plt.ylabel("average degree")
-#     plt.show()
 
 def create_sandpile(num_grains):
     sandpile = {}
@@ -561,8 +559,8 @@ if __name__ == '__main__':
     # G_0 = nx.barabasi_albert_graph(300, 6)
     G_0 = nx.barabasi_albert_graph(300, 6)
 
-    # G_a = assortative_rewiring(G_0)
-    G_a = disassortative_rewiring(G_0)
+    G_a = assortative_rewiring(G_0)
+    # G_a = disassortative_rewiring(G_0)
 
     # assortativity of G_0:
     A_1 = nx.degree_assortativity_coefficient(G_0)
@@ -570,24 +568,13 @@ if __name__ == '__main__':
     # Assortativity of G_a:
     A_2 = nx.degree_assortativity_coefficient(G_a)
 
-
-    # # The comparatively assortative graph:
-    # G_a = assortative_rewiring_random(G_0)
-    #
-    # # The comparatively disassortative graph:
-    # G_b = disassortative_rewiring_random(G_0)
-    #
-    # # Assortativity of G_a:
-    # A_2 = nx.degree_assortativity_coefficient(G_a)
-    #
-
-    nx.draw(G_0, node_size = 1.0, width = 0.5, node_color = "cyan", edge_color = "darkviolet")
+    nx.draw(G_0, node_size = 1.0, width = 0.5, node_color = "lime", edge_color = "navy")
     plt.show()
-    nx.draw(G_a, node_size = 1.0, width = 0.5, node_color = "cyan", edge_color = "darkviolet")
+    nx.draw(G_a, node_size = 1.0, width = 0.5, node_color = "lime", edge_color = "navy")
     plt.show()
-    #
-    # print(f"\n\nA_1: {A_1}")
-    # print(f"A_2 {A_2}\n\n")
+
+    print(f"\n\nA_1: {A_1}")
+    print(f"A_2 {A_2}\n\n")
 
     # lattice = nx.random_regular_graph(4, 400)
     # nx.draw(lattice, node_size = 2.0, width = 0.75, node_color = "lime", edge_color = "green")

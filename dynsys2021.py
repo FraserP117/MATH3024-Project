@@ -242,6 +242,28 @@ def error_dynamics(y):
 
     return A
 
+def my_OG_dynamics(y):
+    X = []
+    for x in y[:1][0]:
+        D = np.zeros(3)
+        D[0] = x[0]
+        D[1] = x[1]
+        D[2] = x[2]
+        X.append(D)
+
+    A = np.array(X)
+
+    return A
+
+'''
+Return the ith column in X.
+'''
+def get_component(X, i):
+    component_dynamics = []
+    for d in X:
+        component_dynamics.append(d[i])
+    return component_dynamics
+
 def component_dynamics(dynamics, index):
     component = []
     for i in dynamics:
@@ -383,11 +405,33 @@ def show_final_dynamics(sigma):
     display_dynamics(y, tpoints, f"z-coupling dynamics for sigma = {sigma}", "purple", is_errors = False)
     display_dynamics(X, tpoints, f"z-coupling error dynamics for sigma = {sigma}", "red", is_errors = True)
 
+def plot_component_dynamics(sigma):
+    # The OG system dynamics (uncoupled)
+    # y, tpoints = init(dynamics)
+    y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
+    X = my_OG_dynamics(y)
+    X_x = get_component(X, 0)
+    X_y = get_component(X, 1)
+    X_z = get_component(X, 2)
+    # plt.plot(tpoints, np.array(y[:1][0]))
+    plt.plot(X_x, X_y, linewidth = 1.0, color = "blue")
+    plt.title("x and y")
+    plt.show()
+    plt.plot(X_x, X_z, linewidth = 1.0, color = "green")
+    plt.title("x and z")
+    plt.show()
+    plt.plot(X_y, X_z, linewidth = 1.0, color = "red")
+    plt.title("x and z")
+    plt.show()
+    plt.plot(X_y, X_z, linewidth = 1.0, color = "purple")
+    plt.title("y and z")
+    plt.show()
+
 
 if __name__ == '__main__':
     # sigma = 0.19 # only exponential divergence for some rounds anything less than this and no exponential divergence
 
-    sigma = 4.0
+    sigma = 5.6
     print(f"coupling strength: {sigma}")
 
     # '''
@@ -401,8 +445,10 @@ if __name__ == '__main__':
     # y, tpoints = init(dynamics)
     # display_dynamics(y, tpoints, f"OG System Dynamics for sigma = {sigma}", "blue", False)
 
-    # component-wise dynamics and errors
-    show_final_dynamics(sigma)
+    # # component-wise dynamics and errors
+    # show_final_dynamics(sigma)
+
+    plot_component_dynamics(sigma)
 
     # # x-coupled dynamics stochastic:
     # y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
