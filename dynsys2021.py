@@ -52,6 +52,10 @@ get rid of x_prime for the init, simply make the x argument 6 dimensional
 the error dynamics are then calculated as the diferences between the correct indices of y - see below
 '''
 
+'''
+MAKE SURE TO GRAPH THE ERRORS IN THE X VECTOR
+'''
+
 
 # Implementation of the system dynamics
 def dynamics(x, t, alpha_c = 10.0, beta_c = 14.87, a_c = -1.27, b_c = -0.68):
@@ -383,7 +387,7 @@ def show_final_dynamics(sigma):
 if __name__ == '__main__':
     # sigma = 0.19 # only exponential divergence for some rounds anything less than this and no exponential divergence
 
-    sigma = 5.6
+    sigma = 4.0
     print(f"coupling strength: {sigma}")
 
     # '''
@@ -398,13 +402,13 @@ if __name__ == '__main__':
     # display_dynamics(y, tpoints, f"OG System Dynamics for sigma = {sigma}", "blue", False)
 
     # component-wise dynamics and errors
-    # show_final_dynamics(sigma)
+    show_final_dynamics(sigma)
 
-    # x-coupled dynamics stochastic:
-    y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
-    X = error_dynamics(y)
-    display_dynamics(y, tpoints, f"x-coupling stohastic dynamics for sigma = {sigma}", "lime", is_errors = False)
-    display_dynamics(X, tpoints, f"x-coupling stohastic error dynamics for sigma = {sigma}", "purple", is_errors = True)
+    # # x-coupled dynamics stochastic:
+    # y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
+    # X = error_dynamics(y)
+    # display_dynamics(y, tpoints, f"x-coupling stohastic dynamics for sigma = {sigma}", "lime", is_errors = False)
+    # display_dynamics(X, tpoints, f"x-coupling stohastic error dynamics for sigma = {sigma}", "purple", is_errors = True)
 
     # # errors vs coupling strength
     # final_x_errors = []

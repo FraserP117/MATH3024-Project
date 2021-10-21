@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+from itertools import chain
 
 # import sys
 #
@@ -131,11 +132,17 @@ def assortative_swaps_random(G):
 
     return G
 
-def is_intersect(L1, L2):
-    for v in L1:
-        if v in L2:
+'''
+If new_edge has any vertices in common with edge_list, return true
+else return False.
+'''
+def any_common_ele(edge_list, new_edge):
+    full = [item for t in edge_list for item in t]
+    for i in new_edge:
+        if i in full:
             return True
     return False
+
 
 '''
 select 2 edges from G_prime: (x, y) (u, v)
@@ -159,6 +166,10 @@ if d_0 > min(d_1, d_2):
 if d_0 < max(d_1, d_2):
     take the max
     add edge for min assortativity
+
+
+randomly select 2 edges from the gaph
+make sure each vertex in teh 2 edges are unique
 '''
 def assortative_swaps(G):
     changed_assortativities = []
@@ -172,23 +183,24 @@ def assortative_swaps(G):
         all_edges = [e for e in G_prime.edges]
         selected_edges = []
         while len(selected_edges) != 2:
-            random_edge = random.choice(all_edges)
-            # if not random_edge in selected_edges and not [v for v in random_edge] in [v for v in all_edges]:
-            # if not random_edge in selected_edges and not [v for v in random_edge] in [v for v in selected_edges]:
-            if not random_edge in selected_edges and not is_intersect([v for v in random_edge], [v for v in selected_edges]):
-                selected_edges.append(random_edge)
-        print(f"\nselected_edges: {selected_edges}")
 
-        # selected_edges: [(u, v), (w, x)]
-        # d_0 = np.abs(selected_edges[0][0] - selected_edges[0][1]) + np.abs(selected_edges[1][0] - selected_edges[1][1]) # d_0 = |k_u - k_v| + |k_w - k_x|
-        # d_1 = np.abs(selected_edges[0][0] - selected_edges[1][0]) + np.abs(selected_edges[0][1] - selected_edges[1][1]) # d_1 = |k_u - k_w| + |k_v - k_x|
-        # d_2 = np.abs(selected_edges[0][0] - selected_edges[1][1]) + np.abs(selected_edges[0][1] - selected_edges[1][0]) # d_2 = |k_u - k_x| + |k_v - k_w|
+            random_edge = random.choice(all_edges)
+
+            print(f"\nPRIOR random_edge: {random_edge}, len(random_edge): {len(random_edge)}")
+            print(f"PRIOR selected_edges: {selected_edges}, len(selected_edges): {len(selected_edges)}")
+
+            if not any_common_ele(selected_edges, random_edge):
+                selected_edges.append(random_edge)
+
+            print(f"AFTER random_edge: {random_edge}, len(random_edge): {len(random_edge)}")
+            print(f"AFTER selected_edges: {selected_edges}, len(selected_edges): {len(selected_edges)}\n")
+
         d_0 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[0][1]]) + np.abs(G_prime.degree[selected_edges[1][0]] - G_prime.degree[selected_edges[1][1]]) # d_0 = |k_u - k_v| + |k_w - k_x|
         d_1 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][0]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][1]]) # d_1 = |k_u - k_w| + |k_v - k_x|
         d_2 = np.abs(G_prime.degree[selected_edges[0][0]] - G_prime.degree[selected_edges[1][1]]) + np.abs(G_prime.degree[selected_edges[0][1]] - G_prime.degree[selected_edges[1][0]]) # d_2 = |k_u - k_x| + |k_v - k_w|
         min_d = min(d_1, d_2)
 
-        print(f"d_0: {d_0}")
+        print(f"\nd_0: {d_0}")
         print(f"d_1: {d_1}")
         print(f"d_2: {d_2}\n")
 
@@ -215,7 +227,7 @@ def assortative_swaps(G):
                 for edge in selected_edges:
                     G_prime.remove_edge(*edge)
 
-                print(f"len(all_edges): {len(all_edges)}\n")
+                # print(f"len(all_edges): {len(all_edges)}\n")
 
             elif min_d == d_2:
                 if G_prime.has_edge(selected_edges[0][0], selected_edges[1][1]):
@@ -239,7 +251,7 @@ def assortative_swaps(G):
                 for edge in selected_edges:
                     G_prime.remove_edge(*edge)
 
-                print(f"len(all_edges): {len(all_edges)}\n")
+                # print(f"len(all_edges): {len(all_edges)}\n")
 
             else:
                 print("--------------------------- NONE SWAPPED ---------------------------")
@@ -494,26 +506,26 @@ if __name__ == '__main__':
     # show_percolation_centralities(probabilities, average_degrees, percolation_centralities, True)
     # show_diameters(probabilities, average_degrees, diameters, True)
 
-    # question 2.b
-    generate_WS_graph_metrics()
-    show_degree_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_degree_centralities, False)
-    show_assortativities(WS_edge_rewire_probabilities, WS_average_degrees, WS_assortativities, False)
-    show_transitivities(WS_edge_rewire_probabilities, WS_average_degrees, WS_transitivities, False)
-    show_eigenvector_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_eigenvector_centralities, False)
-    show_percolation_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_percolation_centralities, False)
-    show_diameters(WS_edge_rewire_probabilities, WS_average_degrees, WS_diameters, False)
+    # # question 2.b
+    # generate_WS_graph_metrics()
+    # show_degree_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_degree_centralities, False)
+    # show_assortativities(WS_edge_rewire_probabilities, WS_average_degrees, WS_assortativities, False)
+    # show_transitivities(WS_edge_rewire_probabilities, WS_average_degrees, WS_transitivities, False)
+    # show_eigenvector_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_eigenvector_centralities, False)
+    # show_percolation_centralities(WS_edge_rewire_probabilities, WS_average_degrees, WS_percolation_centralities, False)
+    # show_diameters(WS_edge_rewire_probabilities, WS_average_degrees, WS_diameters, False)
 
-    # # BA Graph G_0
-    # # G_0 = nx.barabasi_albert_graph(300, 6)
+    # BA Graph G_0
     # G_0 = nx.barabasi_albert_graph(300, 6)
-    #
-    # G_a = assortative_swaps(G_0)
-    #
-    # # assortativity of G_0:
-    # A_1 = nx.degree_assortativity_coefficient(G_0)
-    #
-    # # Assortativity of G_a:
-    # A_2 = nx.degree_assortativity_coefficient(G_a)
+    G_0 = nx.barabasi_albert_graph(300, 6)
+
+    G_a = assortative_swaps(G_0)
+
+    # assortativity of G_0:
+    A_1 = nx.degree_assortativity_coefficient(G_0)
+
+    # Assortativity of G_a:
+    A_2 = nx.degree_assortativity_coefficient(G_a)
 
 
     # # The comparatively assortative graph:
@@ -526,10 +538,10 @@ if __name__ == '__main__':
     # A_2 = nx.degree_assortativity_coefficient(G_a)
     #
 
-    # nx.draw(G_0, node_size = 1.0, width = 0.5, node_color = "cyan", edge_color = "darkviolet")
-    # plt.show()
-    # nx.draw(G_a, node_size = 1.0, width = 0.5, node_color = "cyan", edge_color = "darkviolet")
-    # plt.show()
+    nx.draw(G_0, node_size = 1.0, width = 0.5, node_color = "cyan", edge_color = "darkviolet")
+    plt.show()
+    nx.draw(G_a, node_size = 1.0, width = 0.5, node_color = "cyan", edge_color = "darkviolet")
+    plt.show()
     #
     # print(f"\n\nA_1: {A_1}")
     # print(f"A_2 {A_2}\n\n")

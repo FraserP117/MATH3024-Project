@@ -88,7 +88,7 @@ $$
 \end{pmatrix}
 $$
 
-
+NO NEED TO CONDUCT EXACT VALUE ON $\sigma$ MERELY NEED TO REFERENCE THE GRAPHS
 If we are to have stable synchronisation, we require $\sigma$ such that all the eigenvalues of
 the above matrix are real and negative, thus we find the roots of the corresponding characteristic
 polynomial:
@@ -104,6 +104,31 @@ The Routh-Hurwitz criterion specifies the following 2 conditions on the coeffice
 sufficent to gurantee that all roots are real and negative. These are:
 
 $$a_{0} > 0, a_{1} > 0 ~~ and ~~ a_{2}a_{1} - a_{0} > 0$$
+
+
+Applying these conditions to the characteristic polynomial in question, substituting in the values for
+$\alpha, \beta$, a and b and $f'(\eta) = \xi = a$ we yield the following condition on sigma to
+ensure stable synchronisation of the x to x coupling:
+
+$$\sigma > 5.56$$
+
+
+\paragraph{1.c} In the case of a y to y and z to z coupling, we perform the same series of operations
+as in the above x to x coupling, making sure to add the coupling term to the correct dynamical component
+
+For the y to y coupling we have:
+
+$$\dot{x} = \alpha(y - x - f(x)) $$
+$$\dot{y} = x - y + z + \sigma(y - y')$$
+$$\dot{x} = -\beta y\newline$$
+$$\dot{x'} = \alpha(y' - x' - f(x'))$$
+$$\dot{y'} = x' - y' + z' + \sigma(y' - y)$$
+$$\dot{x'} = -\beta y'$$
+and $f(x')$ is as before.
+Matrix equation
+Characteristic polynomial
+Ruth Hurwitz
+Condition on $\sigma$
 
 
 \subsection*{Question 2}
