@@ -41,21 +41,6 @@ params = { 'figure.figsize': (8,8),
 
 plt.rcParams.update(params)
 
-'''
-NOTES:
-
-return the 6 D system
-integrate the 6D system later
-
-get rid of x_prime for the init, simply make the x argument 6 dimensional
-
-the error dynamics are then calculated as the diferences between the correct indices of y - see below
-'''
-
-'''
-MAKE SURE TO GRAPH THE ERRORS IN THE X VECTOR
-'''
-
 
 # Implementation of the system dynamics
 def dynamics(x, t, alpha_c = 10.0, beta_c = 14.87, a_c = -1.27, b_c = -0.68):
@@ -147,14 +132,6 @@ def dynamics_x_coupling_stochastic(x, t, alpha_c = 10.0, beta_c = 14.87, a_c = -
     fx = b_c * x[0] + 0.5 * (a_c-b_c) * (np.abs(x[0] + 1.0) - np.abs(x[0] - 1.0))
     fx_prime = b_c * x[3] + 0.5 * (a_c-b_c) * (np.abs(x[3] + 1.0) - np.abs(x[3] - 1.0))
 
-    # # The 6D vector x-couppled dynamics
-    # x_dot_x_couppled_system[0] = alpha_c * (x[1] - x[0] - fx) + sigma * (x[3] - x[0] + np.sqrt(D)*(xi[0] - xi[1])) # x-coupling and dynamic noise
-    # x_dot_x_couppled_system[1] = x[0] - x[1] + x[2]
-    # x_dot_x_couppled_system[2] = -beta_c * x[1]
-    # x_dot_x_couppled_system[3] = alpha_c * (x[4] - x[3] - fx_prime) + sigma * (x[0]- x[3] + np.sqrt(D)*(xi[0] - xi[1])) # x-coupling and dynamic noise
-    # x_dot_x_couppled_system[4] = x[3] - x[4] + x[5]
-    # x_dot_x_couppled_system[5] = -beta_c * x[4]
-
     # The 6D vector x-couppled dynamics
     x_dot_x_couppled_system[0] = alpha_c * (x[1] - x[0] - fx) + sigma * (x[3] - x[0])
     x_dot_x_couppled_system[1] = x[0] - x[1] + x[2]
@@ -223,12 +200,12 @@ def dynamics_z_driver(x, t, alpha_c = 10.0, beta_c = 14.87, a_c = -1.27, b_c = -
     # y_couppled_pecora_carrol_system[4] = x[3] - x[4] + x[2]
     y_couppled_pecora_carrol_system[4] = -beta_c * x[4]  # duplicated component
 
-    '''
-    should we duplicate the z component in the OG and the OG' system, and hence have a 6D vector?
-    '''
-
     return y_couppled_pecora_carrol_system
 
+'''
+Return the dynamics for the error-state vector.
+The error-state vector contains 6 dynamical variables.
+'''
 def error_dynamics(y):
     X = []
     for x in y[:1][0]:
@@ -242,7 +219,10 @@ def error_dynamics(y):
 
     return A
 
-def my_OG_dynamics(y):
+'''
+Return the dynamics for the state vector of 3 dynamical variables.
+'''
+def get_dynamics(y):
     X = []
     for x in y[:1][0]:
         D = np.zeros(3)
@@ -349,7 +329,7 @@ def init_system_stochastic(dynamics, sigma):
 
     return y, tpoints
 
-def display_dynamics(y, tpoints, title, color, is_errors):
+def display_entire_dynamics(y, tpoints, title, color, is_errors):
     if is_errors:
         # create the figure; onto which we will plot the above trajectries
         plt.figure(facecolor = 'grey')
@@ -381,80 +361,344 @@ def display_dynamics(y, tpoints, title, color, is_errors):
         plt.tight_layout()
         plt.show()
 
-def show_final_dynamics(sigma):
+# def display_component_dynamics(y, tpoints, title, color):
+#     # create the figure; onto which we will plot the above trajectries
+#     plt.figure(facecolor = 'grey')
+#
+#     # plt.plot(tpoints, np.array(y[:1][0]),'k', color = "green")
+#     plt.plot(tpoints, y, color = color, linewidth = 2)
+#     plt.title(title, fontsize = 12)
+#     plt.xlabel(r"$time$", fontsize = 12)
+#     plt.ylabel(r"$y$", fontsize = 12)
+#     # plt.xlim([0,60])
+#     # plt.ylim([-15,15])
+#     plt.xlim([0,100])
+#     plt.ylim([-10,10])
+#     plt.tight_layout()
+#     plt.show()
 
-    # # The OG system dynamics (uncoupled)
+def show_dynamics_in_time(sigma):
+
+    # The OG system dynamics (uncoupled)
+    y, tpoints = init(dynamics)
+    display_entire_dynamics(y, tpoints, f"System Dynamics for sigma = {sigma}", "blue", False)
+
+    # # x-coupled dynamics:
+    # y, tpoints = init_system(dynamics_x_coupling, sigma = sigma)
+    # X = error_dynamics(y)
+    # display_entire_dynamics(y, tpoints, f"x-coupling dynamics for sigma = {sigma}", "blue", is_errors = False)
+    # display_entire_dynamics(X, tpoints, f"x-coupling error dynamics for sigma = {sigma}", "red", is_errors = True)
+
+    # # y-coupled dynamics:
+    # y, tpoints = init_system(dynamics_y_coupling, sigma = sigma)
+    # X = error_dynamics(y)
+    # # display_entire_dynamics(y, tpoints, f"y-coupling dynamics for sigma = {sigma}", "green", is_errors = False)
+    # display_entire_dynamics(y, tpoints, f"y-coupling dynamics for sigma = {sigma}", "green", is_errors = False)
+    # display_entire_dynamics(X, tpoints, f"y-coupling error dynamics for sigma = {sigma}", "red", is_errors = True)
+
+    # # z-coupled dynamics:
+    # y, tpoints = init_system(dynamics_z_coupling, sigma = sigma)
+    # X = error_dynamics(y)
+    # display_entire_dynamics(y, tpoints, f"z-coupling dynamics for sigma = {sigma}", "purple", is_errors = False)
+    # display_entire_dynamics(X, tpoints, f"z-coupling error dynamics for sigma = {sigma}", "red", is_errors = True)
+
+
+def show_component_dynamics_in_time(sigma):
+    ''' The Uncoupled Dynamics '''
+    # # Origional x dynamics:
     # y, tpoints = init(dynamics)
-    # display_dynamics(y, tpoints, f"System Dynamics for sigma = {sigma}", "blue", False)
+    # X = get_dynamics(y)
+    # X_x = get_component(X, 0)
+    # X_x = np.array(X_x)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_x, color = "blue")
+    # plt.title(f"uncoupled x dynamics",fontsize = 12)
+    # plt.xlabel("time",fontsize = 12)
+    # plt.ylabel("x dynamics", fontsize = 12)
+    # plt.show()
+    #
+    # # Origional y dynamics:
+    # y, tpoints = init(dynamics)
+    # X = get_dynamics(y)
+    # X_y = get_component(X, 1)
+    # X_y = np.array(X_y)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_y, color = "green")
+    # plt.title(f"uncoupled y dynamics",fontsize = 12)
+    # plt.xlabel("time",fontsize = 12)
+    # plt.ylabel("y dynamics", fontsize = 12)
+    # plt.show()
+    #
+    # # Origional x dynamics:
+    # y, tpoints = init(dynamics)
+    # X = get_dynamics(y)
+    # X_z = get_component(X, 2)
+    # X_z = np.array(X_z)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_z, color = "red")
+    # plt.title(f"uncoupled z dynamics",fontsize = 12)
+    # plt.xlabel("time",fontsize = 12)
+    # plt.ylabel("z dynamics", fontsize = 12)
+    # plt.show()
 
+    ''' x - x coupled dynamics '''
     # x-coupled dynamics:
     y, tpoints = init_system(dynamics_x_coupling, sigma = sigma)
-    X = error_dynamics(y)
-    display_dynamics(y, tpoints, f"x-coupling dynamics for sigma = {sigma}", "blue", is_errors = False)
-    display_dynamics(X, tpoints, f"x-coupling error dynamics for sigma = {sigma}", "red", is_errors = True)
+    X = get_dynamics(y)
+    X_x = get_component(X, 0)
+    X_x = np.array(X_x)
+    tpoints = np.array(tpoints)
+    plt.plot(tpoints, X_x, color = "blue")
+    plt.title(f"x-coupling dynamics for sigma = {sigma}", fontsize = 12)
+    plt.xlabel("time", fontsize = 12)
+    plt.ylabel("coupled x dynamics", fontsize = 12)
+    plt.show()
 
-    # y-coupled dynamics:
-    y, tpoints = init_system(dynamics_y_coupling, sigma = sigma)
     X = error_dynamics(y)
-    display_dynamics(y, tpoints, f"y-coupling dynamics for sigma = {sigma}", "lime", is_errors = False)
-    display_dynamics(X, tpoints, f"y-coupling error dynamics for sigma = {sigma}", "red", is_errors = True)
+    X_x = get_component(X, 0)
+    X_x = np.array(X_x)
+    tpoints = np.array(tpoints)
+    plt.plot(tpoints, X_x, color = "red")
+    plt.title(f"x-coupling error dynamics for sigma = {sigma}", fontsize = 12)
+    plt.xlabel("time", fontsize = 12)
+    plt.ylabel("error in coupled x dynamics", fontsize = 12)
+    plt.show()
 
-    # z-coupled dynamics:
-    y, tpoints = init_system(dynamics_z_coupling, sigma = sigma)
-    X = error_dynamics(y)
-    display_dynamics(y, tpoints, f"z-coupling dynamics for sigma = {sigma}", "purple", is_errors = False)
-    display_dynamics(X, tpoints, f"z-coupling error dynamics for sigma = {sigma}", "red", is_errors = True)
+    ''' y - y coupled dynamics '''
+    # # y-coupled dynamics:
+    # y, tpoints = init_system(dynamics_y_coupling, sigma = sigma)
+    # # X = error_dynamics(y)
+    # X = get_dynamics(y)
+    # X_y = get_component(X, 1)
+    # X_y = np.array(X_y)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_y, color = "green")
+    # plt.title(f"y-coupling dynamics for sigma = {sigma}")
+    # plt.show()
+    #
+    # X = error_dynamics(y)
+    # X_y = get_component(X, 1)
+    # X_y = np.array(X_y)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_y, color = "red")
+    # plt.title(f"y-coupling error dynamics for sigma = {sigma}")
+    # plt.show()
+
+    ''' z - z coupled dynamics '''
+    # # z-coupled dynamics:
+    # y, tpoints = init_system(dynamics_z_coupling, sigma = sigma)
+    # # X = error_dynamics(y)
+    # X = get_dynamics(y)
+    # X_z = get_component(X, 2)
+    # X_z = np.array(X_z)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_z, color = "purple")
+    # plt.title(f"z-coupling dynamics for sigma = {sigma}")
+    # plt.show()
+    #
+    # X = error_dynamics(y)
+    # X_z = get_component(X, 2)
+    # X_z = np.array(X_z)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_z, color = "red")
+    # plt.title(f"z-coupling error dynamics for sigma = {sigma}")
+    # plt.show()
+
+    '''
+    Stochastic x - x coupling dynamics
+    '''
+
+    ''' x - x coupled dynamics '''
+    # # x-coupled dynamics:
+    # y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
+    # X = get_dynamics(y)
+    # X_x = get_component(X, 0)
+    # X_x = np.array(X_x)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_x, color = "blue")
+    # plt.title(f"x-coupling dynamics for sigma = {sigma}", fontsize = 12)
+    # plt.xlabel("time", fontsize = 12)
+    # plt.ylabel("coupled x dynamics", fontsize = 12)
+    # plt.show()
+    #
+    # X = error_dynamics(y)
+    # X_x = get_component(X, 0)
+    # X_x = np.array(X_x)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_x, color = "red")
+    # plt.title(f"x-coupling error dynamics for sigma = {sigma}", fontsize = 12)
+    # plt.xlabel("time", fontsize = 12)
+    # plt.ylabel("error in coupled x dynamics", fontsize = 12)
+    # plt.show()
+
+    ''' y - y coupled dynamics '''
+    # # y-coupled dynamics:
+    # y, tpoints = init_system(dynamics_y_coupling, sigma = sigma)
+    # # X = error_dynamics(y)
+    # X = get_dynamics(y)
+    # X_y = get_component(X, 1)
+    # X_y = np.array(X_y)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_y, color = "green")
+    # plt.title(f"y-coupling dynamics for sigma = {sigma}")
+    # plt.show()
+    #
+    # X = error_dynamics(y)
+    # X_y = get_component(X, 1)
+    # X_y = np.array(X_y)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_y, color = "red")
+    # plt.title(f"y-coupling error dynamics for sigma = {sigma}")
+    # plt.show()
+
+    ''' z - z coupled dynamics '''
+    # # z-coupled dynamics:
+    # y, tpoints = init_system(dynamics_z_coupling, sigma = sigma)
+    # # X = error_dynamics(y)
+    # X = get_dynamics(y)
+    # X_z = get_component(X, 2)
+    # X_z = np.array(X_z)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_z, color = "purple")
+    # plt.title(f"z-coupling dynamics for sigma = {sigma}")
+    # plt.show()
+    #
+    # X = error_dynamics(y)
+    # X_z = get_component(X, 2)
+    # X_z = np.array(X_z)
+    # tpoints = np.array(tpoints)
+    # plt.plot(tpoints, X_z, color = "red")
+    # plt.title(f"z-coupling error dynamics for sigma = {sigma}")
+    # plt.show()
+
+# def set_labels(title, xlabel, ylabel):
+#     labels = [title, xlabel, ylabel]
+#     return labels
+
+# def show_component_dynamics_in_time(y, tpoints, component, sigma, is_coupled_system, labels):
+#     index = 0
+#     if component == 'x':
+#         index = 0
+#     elif component == 'y':
+#         index = 1
+#     else:
+#         index == 2
+#     ''' Origional - uncoupled - Dynamics '''
+#     if not is_coupled_system:
+#         X = get_dynamics(y)
+#         index_of_X = get_component(X, index)
+#         index_of_X = np.array(index_of_X)
+#         tpoints = np.array(tpoints)
+#         plt.plot(tpoints, index_of_X, color = "blue")
+#         plt.title(labels[0],fontsize = 12)
+#         plt.xlabel(labels[1],fontsize = 12)
+#         plt.ylabel(labels[2], fontsize = 12)
+#         plt.show()
+
+# def show_component_error_dynamics_in_time(y, tpoints, component, sigma, is_coupled_system, labels):
+#     index = 0
+#     if component == 'x':
+#         index = 0
+#     elif component == 'y':
+#         index = 1
+#     else:
+#         index == 2
+#     ''' Origional - uncoupled - Dynamics '''
+#     if not is_coupled_system:
+#         X = error_dynamics(y)
+#         index_of_X = get_component(X, index)
+#         index_of_X = np.array(index_of_X)
+#         tpoints = np.array(tpoints)
+#         plt.plot(tpoints, index_of_X, color = "red")
+#         plt.title(labels[0],fontsize = 12)
+#         plt.xlabel(labels[1],fontsize = 12)
+#         plt.ylabel(labels[2], fontsize = 12)
+#         plt.show()
 
 def plot_component_dynamics(sigma):
     # The OG system dynamics (uncoupled)
     # y, tpoints = init(dynamics)
     y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
-    X = my_OG_dynamics(y)
+    # X = error_dynamics(y)
+    # y, tpoints = init_system(dynamics_x_coupling, sigma = sigma)
+    # y, tpoints = init_system(dynamics_y_coupling, sigma = sigma)
+    # y, tpoints = init_system(dynamics_z_coupling, sigma = sigma)
+    # X = error_dynamics(y)
+    X = get_dynamics(y)
     X_x = get_component(X, 0)
     X_y = get_component(X, 1)
     X_z = get_component(X, 2)
-    # plt.plot(tpoints, np.array(y[:1][0]))
-    plt.plot(X_x, X_y, linewidth = 1.0, color = "blue")
-    plt.title("x and y")
-    plt.show()
-    plt.plot(X_x, X_z, linewidth = 1.0, color = "green")
-    plt.title("x and z")
-    plt.show()
-    plt.plot(X_y, X_z, linewidth = 1.0, color = "red")
-    plt.title("x and z")
-    plt.show()
-    plt.plot(X_y, X_z, linewidth = 1.0, color = "purple")
-    plt.title("y and z")
-    plt.show()
 
+    plt.plot(X_x, X_y, linewidth = 0.75, color = "mediumblue")
+    plt.title(f"x-y dynamics, sigma: {sigma}", fontsize = 12)
+    plt.xlabel("x component", fontsize = 12)
+    plt.ylabel("y component", fontsize = 12)
+    plt.show()
+    plt.plot(X_x, X_z, linewidth = 0.75, color = "mediumblue")
+    plt.title(f"x-z dynamics, sigma: {sigma}", fontsize = 12)
+    plt.xlabel("x component", fontsize = 12)
+    plt.ylabel("z component", fontsize = 12)
+    plt.show()
+    plt.plot(X_y, X_z, linewidth = 0.75, color = "mediumblue")
+    plt.title(f"y-z dynamics, sigma: {sigma}", fontsize = 12)
+    plt.xlabel("y component", fontsize = 12)
+    plt.ylabel("z component", fontsize = 12)
+    plt.show()
+    # plt.plot(X_y, X_z, linewidth = 1.0, color = "purple")
+    # plt.title("y-z dynamics", fontsize = 12)
+    # plt.xlabel("y component", fontsize = 12)
+    # plt.ylabel("z component", fontsize = 12)
+    # plt.show()
+
+# def plot_component_dynamics(y, sigma, components, labels):
+#
+#     X = get_dynamics(y)
+#     X_x = get_component(X, 0)
+#     X_y = get_component(X, 1)
+#     X_z = get_component(X, 2)
+#
+#     if components == 'xy':
+#         plt.plot(X_x, X_y, linewidth = 0.75, color = "mediumblue")
+#         plt.title(labels[0], fontsize = 12)
+#         plt.xlabel(labels[1], fontsize = 12)
+#         plt.ylabel(labels[2], fontsize = 12)
+#         plt.show()
+#     if components == 'xz':
+#         plt.plot(X_x, X_z, linewidth = 0.75, color = "mediumblue")
+#         plt.title(labels[0], fontsize = 12)
+#         plt.xlabel(labels[1], fontsize = 12)
+#         plt.ylabel(labels[2], fontsize = 12)
+#         plt.show()
+#     if components == 'yz':
+#         plt.plot(X_y, X_z, linewidth = 0.75, color = "mediumblue")
+#         plt.title(labels[0], fontsize = 12)
+#         plt.xlabel(labels[1], fontsize = 12)
+#         plt.ylabel(labels[2], fontsize = 12)
+#         plt.show()
 
 if __name__ == '__main__':
     # sigma = 0.19 # only exponential divergence for some rounds anything less than this and no exponential divergence
 
-    sigma = 5.6
+    # sigma = 4.3 # interesting  for z coupling
+    # sigma = 2.5 # interesting for z coupling
+    sigma = 2.5
     print(f"coupling strength: {sigma}")
 
-    # '''
-    # want to plot the error integral against the coupling strength.
-    # E_x = (1/T)*(sum from 0 to T of np.abs(x-x_prime))
-    # E_y = (1/T)*(sum from 0 to T of np.abs(y-y_prime))
-    # E_z = (1/T)*(sum from 0 to T of np.abs(z-z_prime))
-    # '''
 
-    # The OG system dynamics (uncoupled)
-    # y, tpoints = init(dynamics)
-    # display_dynamics(y, tpoints, f"OG System Dynamics for sigma = {sigma}", "blue", False)
-
-    # # component-wise dynamics and errors
-    # show_final_dynamics(sigma)
-
+    ''' The uncoupled dynamics in time '''
+    y, tpoints = init(dynamics)
+    show_component_dynamics_in_time(sigma)
     plot_component_dynamics(sigma)
+
+
+    ''' x to x coupling '''
+
 
     # # x-coupled dynamics stochastic:
     # y, tpoints = init_system(dynamics_x_coupling_stochastic, sigma = sigma)
     # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, f"x-coupling stohastic dynamics for sigma = {sigma}", "lime", is_errors = False)
-    # display_dynamics(X, tpoints, f"x-coupling stohastic error dynamics for sigma = {sigma}", "purple", is_errors = True)
+    # display_entire_dynamics(y, tpoints, f"x-coupling stohastic dynamics for sigma = {sigma}", "lime", is_errors = False)
+    # display_entire_dynamics(X, tpoints, f"x-coupling stohastic error dynamics for sigma = {sigma}", "purple", is_errors = True)
 
     # # errors vs coupling strength
     # final_x_errors = []
@@ -463,7 +707,7 @@ if __name__ == '__main__':
     #
     # sigmas = []
     #
-    # for j in range(1000):
+    # for j in range(2100):
     #
     #     sigmas.append(sigma)
     #
@@ -473,6 +717,7 @@ if __name__ == '__main__':
     #
     #     y, tpoints = init_system(dynamics_x_coupling, sigma = sigma)
     #     ex = error_dynamics(y)
+    #     # ex = get_dynamics(y)
     #     for i in ex:
     #         x_errors.append(i[0])
     #
@@ -481,6 +726,7 @@ if __name__ == '__main__':
     #     # y-coupled dynamics:
     #     y, tpoints = init_system(dynamics_y_coupling, sigma = sigma)
     #     ey = error_dynamics(y)
+    #     # ey = get_dynamics(y)
     #     for i in ey:
     #         y_errors.append(i[1])
     #
@@ -489,6 +735,7 @@ if __name__ == '__main__':
     #     # z-coupled dynamics:
     #     y, tpoints = init_system(dynamics_z_coupling, sigma = sigma)
     #     ez = error_dynamics(y)
+    #     # ez = get_dynamics(y)
     #     for i in ez:
     #         z_errors.append(i[2])
     #
@@ -496,11 +743,6 @@ if __name__ == '__main__':
     #
     #     sigma += 0.01
     #
-    # # # print(f"final_x_errors: {final_x_errors} ")
-    # # # print(f"final_y_errors: {final_y_errors} ")
-    # # # print(f"final_z_errors: {final_z_errors} ")
-    # # # print(f"sigmas: {sigmas}")
-    # #
     # # x-errors
     # plt.plot(sigmas, final_x_errors)
     # plt.title("coupling strength step size: 0.01")
@@ -521,6 +763,8 @@ if __name__ == '__main__':
     # plt.xlabel("coupling strength: sigma", fontsize = 12)
     # plt.ylabel("z-component errors", fontsize = 12)
     # plt.show()
+    #
+    # print(f"sigma: {sigma}")
 
     # sigma = 5.6
     #
@@ -528,17 +772,17 @@ if __name__ == '__main__':
     # # x-driving dynamics:
     # y, tpoints = init_system(dynamics_x_driver, sigma = sigma)
     # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, f"System Dynamics: x-driving coupling strength = {sigma}", "blue", is_errors = False)
-    # display_dynamics(X, tpoints, f"Error Dynamics: x-driving coupling strength = {sigma}", "red", is_errors = True)
+    # display_entire_dynamics(y, tpoints, f"System Dynamics: x-driving coupling strength = {sigma}", "blue", is_errors = False)
+    # display_entire_dynamics(X, tpoints, f"Error Dynamics: x-driving coupling strength = {sigma}", "red", is_errors = True)
     #
     # # y-driving dynamics:
     # y, tpoints = init_system(dynamics_y_driver, sigma = sigma)
     # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, f"System Dynamics: y-driving coupling strength = {sigma}", "lime", is_errors = False)
-    # display_dynamics(X, tpoints, f"Error Dynamics: y-driving coupling strength = {sigma}", "red", is_errors = True)
+    # display_entire_dynamics(y, tpoints, f"System Dynamics: y-driving coupling strength = {sigma}", "lime", is_errors = False)
+    # display_entire_dynamics(X, tpoints, f"Error Dynamics: y-driving coupling strength = {sigma}", "red", is_errors = True)
     #
     # # z-driving dynamics:
     # y, tpoints = init_system(dynamics_z_driver, sigma = sigma)
     # X = error_dynamics(y)
-    # display_dynamics(y, tpoints, f"System Dynamics: z-driving coupling strength = {sigma}", "orange", is_errors = False)
-    # display_dynamics(X, tpoints, f"Error Dynamics: z-driving coupling strength = {sigma}", "red", is_errors = True)
+    # display_entire_dynamics(y, tpoints, f"System Dynamics: z-driving coupling strength = {sigma}", "orange", is_errors = False)
+    # display_entire_dynamics(X, tpoints, f"Error Dynamics: z-driving coupling strength = {sigma}", "red", is_errors = True)

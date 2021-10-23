@@ -276,7 +276,6 @@ def assortative_rewiring(G):
 
     return G
 
-
 def disassortative_rewiring(G):
     number_swaps = []
     assortativity_history = []

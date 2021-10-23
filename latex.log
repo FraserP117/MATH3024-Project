@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2021.9.10)  21 OCT 2021 14:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2021.9.10)  22 OCT 2021 20:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -105,122 +105,367 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 LaTeX Info: Redefining \[ on input line 2923.
 LaTeX Info: Redefining \] on input line 2924.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2020/10/07 v1.3j Sub-captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen150
+\captionmargin@=\dimen151
+\captionwidth=\dimen152
+\caption@tempdima=\dimen153
+\caption@indent=\dimen154
+\caption@parindent=\dimen155
+\caption@hangindent=\dimen156
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count197
+\c@continuedfloat=\count198
+)
+\c@subfigure=\count199
+\c@subtable=\count266
+)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count267
+\Gm@cntv=\count268
+\c@Gm@tempcnt=\count269
+\Gm@bindingoffset=\dimen157
+\Gm@wd@mp=\dimen158
+\Gm@odd@mp=\dimen159
+\Gm@even@mp=\dimen160
+\Gm@layoutwidth=\dimen161
+\Gm@layoutheight=\dimen162
+\Gm@layouthoffset=\dimen163
+\Gm@layoutvoffset=\dimen164
+\Gm@dimlist=\toks21
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count270
+\float@exts=\toks22
+\float@box=\box49
+\@float@everytoks=\toks23
+\@floatcapt=\box50
+)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2020-01-29 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count197
-\l__pdf_internal_box=\box49
+\l__color_backend_stack_int=\count271
+\l__pdf_internal_box=\box51
 )
 (./latex.aux)
 \openout1 = `latex.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count198
-\scratchdimen=\dimen150
-\scratchbox=\box50
-\nofMPsegments=\count199
-\nofMParguments=\count266
-\everyMPshowfont=\toks21
-\MPscratchCnt=\count267
-\MPscratchDim=\dimen151
-\MPnumerator=\count268
-\makeMPintoPDFobject=\count269
-\everyMPtoPDFconversion=\toks22
+\scratchcounter=\count272
+\scratchdimen=\dimen165
+\scratchbox=\box52
+\nofMPsegments=\count273
+\nofMParguments=\count274
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count275
+\MPscratchDim=\dimen166
+\MPnumerator=\count276
+\makeMPintoPDFobject=\count277
+\everyMPtoPDFconversion=\toks25
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-
-(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
-Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/grfext/grfext.sty
-Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
-Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
-Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
-)
-
-(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2020/03/06 v1.0d TeX engine tests
-)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 504.
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(90.3375pt, 433.62001pt, 90.3375pt)
+* v-part:(T,H,B)=(90.3375pt, 614.295pt, 90.3375pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=433.62001pt
+* \textheight=614.295pt
+* \oddsidemargin=18.0675pt
+* \evensidemargin=18.0675pt
+* \topmargin=-18.9325pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+<dynamics_xy.png, id=1, 693.792pt x 349.7868pt>
+File: dynamics_xy.png Graphic file (type png)
+<use dynamics_xy.png>
+Package pdftex.def Info: dynamics_xy.png  used on input line 54.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-<Screenshot from 2021-10-17 21-43-29.png, id=20, 1927.2pt x 1084.05pt>
-File: Screenshot from 2021-10-17 21-43-29.png Graphic file (type png)
-<use Screenshot from 2021-10-17 21-43-29.png>
-Package pdftex.def Info: Screenshot from 2021-10-17 21-43-29.png  used on input
- line 140.
-(pdftex.def)             Requested size: 289.07999pt x 162.60048pt.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<dynamics_xz.png, id=16, 693.792pt x 349.7868pt>
+File: dynamics_xz.png Graphic file (type png)
+<use dynamics_xz.png>
+Package pdftex.def Info: dynamics_xz.png  used on input line 60.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<dynamics_yz.png, id=17, 693.792pt x 349.7868pt>
+File: dynamics_yz.png Graphic file (type png)
+<use dynamics_yz.png>
+Package pdftex.def Info: dynamics_yz.png  used on input line 66.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_dynamics_t.png, id=18, 693.792pt x 349.7868pt>
+File: x_dynamics_t.png Graphic file (type png)
+<use x_dynamics_t.png>
+Package pdftex.def Info: x_dynamics_t.png  used on input line 74.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [2 <./dynamics_xy.png> <./dynamics_xz.png> <./dynamics_yz.png>]
+<y_dynamics_t.png, id=25, 693.792pt x 349.7868pt>
+File: y_dynamics_t.png Graphic file (type png)
+<use y_dynamics_t.png>
+Package pdftex.def Info: y_dynamics_t.png  used on input line 80.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<z_dynamics_t.png, id=26, 693.792pt x 349.7868pt>
+File: z_dynamics_t.png Graphic file (type png)
+<use z_dynamics_t.png>
+Package pdftex.def Info: z_dynamics_t.png  used on input line 86.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [3 <./x_dynamics_t.png> <./y_dynamics_t.png> <./z_dynamics_t.png>]
+<x_errors.png, id=34, 693.792pt x 349.7868pt>
+File: x_errors.png Graphic file (type png)
+<use x_errors.png>
+Package pdftex.def Info: x_errors.png  used on input line 143.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<y_errors_3.png, id=35, 693.792pt x 349.7868pt>
+File: y_errors_3.png Graphic file (type png)
+<use y_errors_3.png>
+Package pdftex.def Info: y_errors_3.png  used on input line 149.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [4 <./x_errors.png>]
+<z_errors_3.png, id=41, 693.792pt x 349.7868pt>
+File: z_errors_3.png Graphic file (type png)
+<use z_errors_3.png>
+Package pdftex.def Info: z_errors_3.png  used on input line 155.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_coupled_s26_xy.png, id=42, 693.792pt x 349.7868pt>
+File: x_coupled_s26_xy.png Graphic file (type png)
+<use x_coupled_s26_xy.png>
+Package pdftex.def Info: x_coupled_s26_xy.png  used on input line 165.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_coupled_s26_xz.png, id=43, 693.792pt x 349.7868pt>
+File: x_coupled_s26_xz.png Graphic file (type png)
+<use x_coupled_s26_xz.png>
+Package pdftex.def Info: x_coupled_s26_xz.png  used on input line 171.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [5 <./y_errors_3.png> <./z_errors_3.png> <./x_coupled_s26_xy.png>]
+<x_coupled_s26_zy.png, id=50, 693.792pt x 349.7868pt>
+File: x_coupled_s26_zy.png Graphic file (type png)
+<use x_coupled_s26_zy.png>
+Package pdftex.def Info: x_coupled_s26_zy.png  used on input line 177.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_coupling_s28_xy.png, id=51, 693.792pt x 349.7868pt>
+File: x_coupling_s28_xy.png Graphic file (type png)
+<use x_coupling_s28_xy.png>
+Package pdftex.def Info: x_coupling_s28_xy.png  used on input line 183.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_coupling_s28_xz.png, id=52, 693.792pt x 349.7868pt>
+File: x_coupling_s28_xz.png Graphic file (type png)
+<use x_coupling_s28_xz.png>
+Package pdftex.def Info: x_coupling_s28_xz.png  used on input line 189.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [6 <./x_coupled_s26_xz.png> <./x_coupled_s26_zy.png> <./x_coupling_s28_xy.png>
+]
+<x_coupling_s28_zy.png, id=59, 693.792pt x 349.7868pt>
+File: x_coupling_s28_zy.png Graphic file (type png)
+<use x_coupling_s28_zy.png>
+Package pdftex.def Info: x_coupling_s28_zy.png  used on input line 195.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_coupling_x_dynamics_s26.png, id=60, 693.792pt x 349.7868pt>
+File: x_coupling_x_dynamics_s26.png Graphic file (type png)
+<use x_coupling_x_dynamics_s26.png>
+Package pdftex.def Info: x_coupling_x_dynamics_s26.png  used on input line 204.
 
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_coupling_x_errors_s26.png, id=61, 693.792pt x 349.7868pt>
+File: x_coupling_x_errors_s26.png Graphic file (type png)
+<use x_coupling_x_errors_s26.png>
+Package pdftex.def Info: x_coupling_x_errors_s26.png  used on input line 210.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [7 <./x_coupling_s28_xz.png> <./X_coupling_s28_zy.png> <./x_coupling_x_dynamic
+s_s26.png>]
+<x_coupled_x_dynamics_s28.png, id=69, 693.792pt x 349.7868pt>
+File: x_coupled_x_dynamics_s28.png Graphic file (type png)
+<use x_coupled_x_dynamics_s28.png>
+Package pdftex.def Info: x_coupled_x_dynamics_s28.png  used on input line 218.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_coupling_x_errors_s28.png, id=70, 693.792pt x 349.7868pt>
+File: x_coupling_x_errors_s28.png Graphic file (type png)
+<use x_coupling_x_errors_s28.png>
+Package pdftex.def Info: x_coupling_x_errors_s28.png  used on input line 224.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<x_coupling_x_dynamics_s39.png, id=71, 693.792pt x 349.7868pt>
+File: x_coupling_x_dynamics_s39.png Graphic file (type png)
+<use x_coupling_x_dynamics_s39.png>
+Package pdftex.def Info: x_coupling_x_dynamics_s39.png  used on input line 232.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [8 <./x_coupling_x_errors_s26.png> <./x_coupled_x_dynamics_s28.png> <./x_coupl
+ing_x_errors_s28.png>]
+<x_coupling_x_errors_s39.png, id=78, 693.792pt x 349.7868pt>
+File: x_coupling_x_errors_s39.png Graphic file (type png)
+<use x_coupling_x_errors_s39.png>
+Package pdftex.def Info: x_coupling_x_errors_s39.png  used on input line 238.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<y_coupled_y_dynamics_s1.png, id=79, 693.792pt x 349.7868pt>
+File: y_coupled_y_dynamics_s1.png Graphic file (type png)
+<use y_coupled_y_dynamics_s1.png>
+Package pdftex.def Info: y_coupled_y_dynamics_s1.png  used on input line 260.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [9 <./x_coupling_x_dynamics_s39.png> <./x_coupling_x_errors_s39.png>]
+<y_coupled_y_error_s1.png, id=85, 693.792pt x 349.7868pt>
+File: y_coupled_y_error_s1.png Graphic file (type png)
+<use y_coupled_y_error_s1.png>
+Package pdftex.def Info: y_coupled_y_error_s1.png  used on input line 266.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<y_coupled_s1_xy.png, id=86, 693.792pt x 349.7868pt>
+File: y_coupled_s1_xy.png Graphic file (type png)
+<use y_coupled_s1_xy.png>
+Package pdftex.def Info: y_coupled_s1_xy.png  used on input line 274.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<y_coupled_s1_xz.png, id=87, 693.792pt x 349.7868pt>
+File: y_coupled_s1_xz.png Graphic file (type png)
+<use y_coupled_s1_xz.png>
+Package pdftex.def Info: y_coupled_s1_xz.png  used on input line 280.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [10 <./y_coupled_y_dynamics_s1.png> <./y_coupled_y_error_s1.png> <./y_coupled_
+s1_xy.png>]
+<y_coupled_s1_yz.png, id=94, 693.792pt x 349.7868pt>
+File: y_coupled_s1_yz.png Graphic file (type png)
+<use y_coupled_s1_yz.png>
+Package pdftex.def Info: y_coupled_s1_yz.png  used on input line 286.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<z_coupling_z_dynamics_s10.png, id=95, 693.792pt x 349.7868pt>
+File: z_coupling_z_dynamics_s10.png Graphic file (type png)
+<use z_coupling_z_dynamics_s10.png>
+Package pdftex.def Info: z_coupling_z_dynamics_s10.png  used on input line 296.
 
-[3] [4 <./Screenshot from 2021-10-17 21-43-29.png>] (./latex.aux) ) 
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<z_coupling_z_error_s10.png, id=96, 693.792pt x 349.7868pt>
+File: z_coupling_z_error_s10.png Graphic file (type png)
+<use z_coupling_z_error_s10.png>
+Package pdftex.def Info: z_coupling_z_error_s10.png  used on input line 302.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+
+[11 <./y_coupled_s1_xz.png> <./y_coupled_s1_yz.png> <./z_coupling_z_dynamics_s1
+0.png>]
+<z_coupling_z_dynamics_s101.png, id=103, 693.792pt x 349.7868pt>
+File: z_coupling_z_dynamics_s101.png Graphic file (type png)
+<use z_coupling_z_dynamics_s101.png>
+Package pdftex.def Info: z_coupling_z_dynamics_s101.png  used on input line 308
+.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<z_coupling_z_error_s101.png, id=104, 693.792pt x 349.7868pt>
+File: z_coupling_z_error_s101.png Graphic file (type png)
+<use z_coupling_z_error_s101.png>
+Package pdftex.def Info: z_coupling_z_error_s101.png  used on input line 314.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<z_coupling_xy.png, id=105, 693.792pt x 349.7868pt>
+File: z_coupling_xy.png Graphic file (type png)
+<use z_coupling_xy.png>
+Package pdftex.def Info: z_coupling_xy.png  used on input line 322.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [12 <./z_coupling_z_error_s10.png> <./z_coupling_z_dynamics_s101.png> <./z_cou
+pling_z_error_s101.png>]
+<z_coupling_xz.png, id=112, 693.792pt x 349.7868pt>
+File: z_coupling_xz.png Graphic file (type png)
+<use z_coupling_xz.png>
+Package pdftex.def Info: z_coupling_xz.png  used on input line 328.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+<z_coupling_yz.png, id=113, 342.5598pt x 344.0052pt>
+File: z_coupling_yz.png Graphic file (type png)
+<use z_coupling_yz.png>
+Package pdftex.def Info: z_coupling_yz.png  used on input line 334.
+(pdftex.def)             Requested size: 289.10205pt x 144.53893pt.
+<z_coupling_z_dynamics_s1.png, id=114, 693.792pt x 349.7868pt>
+File: z_coupling_z_dynamics_s1.png Graphic file (type png)
+<use z_coupling_z_dynamics_s1.png>
+Package pdftex.def Info: z_coupling_z_dynamics_s1.png  used on input line 342.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [13 <./z_coupling_xy.png> <./z_coupling_xz.png> <./z_coupling_yz.png>]
+<z_coupling_z_error_s1.png, id=122, 693.792pt x 349.7868pt>
+File: z_coupling_z_error_s1.png Graphic file (type png)
+<use z_coupling_z_error_s1.png>
+Package pdftex.def Info: z_coupling_z_error_s1.png  used on input line 348.
+(pdftex.def)             Requested size: 289.08281pt x 144.53969pt.
+ [14 <./z_coupling_z_dynamics_s1.png> <./z_coupling_z_error_s1.png>] (./latex.a
+ux) ) 
 Here is how much of TeX's memory you used:
- 2349 strings out of 481252
- 34509 string characters out of 5915888
- 318346 words of memory out of 5000000
- 19275 multiletter control sequences out of 15000+600000
+ 3936 strings out of 481252
+ 64227 string characters out of 5915888
+ 345303 words of memory out of 5000000
+ 20836 multiletter control sequences out of 15000+600000
  408813 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,9n,78p,202b,228s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on latex.pdf (4 pages, 961033 bytes).
+ 69i,9n,77p,315b,281s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy7.pfb>
+Output written on latex.pdf (14 pages, 2443168 bytes).
 PDF statistics:
- 64 PDF objects out of 1000 (max. 8388607)
- 44 compressed objects within 1 object stream
+ 161 PDF objects out of 1000 (max. 8388607)
+ 64 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 176 words of extra memory for PDF output out of 10000 (max. 10000000)
 
